@@ -1,9 +1,13 @@
 var KEYCODE_SPACE = 32;
-
+var KEYCODE_LEFT = 37;
+var KEYCODE_RIGHT = 39;
+var holdLeft = false;
+var holdRight = false;
 var gravity = 1;
 var jumpHight = 0;
 var sprite = {
 	jumping: false,
+	jumpSpeed: 10,
 	height: 50,
 	x: NaN,
 	y: 50
@@ -39,24 +43,45 @@ scene.add(user);
 
 function jump(){
 	if (sprite.jumping == false){
-		sprite.y += 50;
 		sprite.jumping = true;
-		console.log(sprite.y);
 	}
 }
 
 document.addEventListener("keydown", keyDown);
+document.addEventListener("keyup", keyUp);
 
 function keyDown(e){
-					switch(32){//space
-						case KEYCODE_SPACE:
-							jump();
-							break;
-					}
+	console.log(e.keyCode);
+	switch(e.keyCode){//space
+		case KEYCODE_SPACE:
+			jump();
+			break;
+		case KEYCODE_LEFT:
+			holdLeft = true;
+			break;
+		case KEYCODE_RIGHT:
+			holdRight = true;
+			break;
+	}
+};
+
+function keyUp(e){
+
+	switch(e.keyCode){//space
+		case KEYCODE_SPACE:
+			jump();
+			break;
+		case KEYCODE_LEFT:
+			holdLeft = false;
+			break;
+		case KEYCODE_RIGHT:
+			holdRight = false;
+			break;
+
+	}
 };
 
 function render() {
-	requestAnimationFrame( render );
 	renderer.render( scene, camera );
 };
 
@@ -66,22 +91,30 @@ function animate(){
 	requestAnimationFrame( animate );
 
 
-		if (sprite.jumping == true && jumpHight <= 50){
-			jumpHight +=1;
-			user.position.y += 2;
-			console.log(jumpHight);
-			if (jumpHight == 50){
-				sprite.jumping = false;
-				console.log(sprite.jumping);
-			}
+	if (sprite.jumping == true && jumpHight <= 50){
+		jumpHight +=2;
+		user.position.y += sprite.jumpSpeed;
+
+		if (jumpHight == 50){
+			sprite.jumping = false;
+
 		}
+	}
 
 	if (sprite.jumping == false){
 		if (user.position.y <= (cube.position.y + sprite.height)){
 		}
-		else user.position.y -= 2;
+		else user.position.y -= sprite.jumpSpeed;
 
 		jumpHight = 0;
+	}
+
+	if (holdLeft == true){
+		user.position.x -= 5;
+	}
+
+	if (holdRight == true){
+		user.position.x += 5;
 	}
 
 
