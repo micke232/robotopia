@@ -1,6 +1,12 @@
-var gravity = 2;
+var KEYCODE_SPACE = 32;
+
+var gravity = 1;
+var jumpHight = 0;
 var sprite = {
-	height: 50
+	jumping: false,
+	height: 50,
+	x: NaN,
+	y: 50
 }
 
 
@@ -27,16 +33,32 @@ var userMaterial = new THREE.MeshBasicMaterial( {
 	color: "red"
 } );
 var user = new THREE.Mesh( userGeometry, userMaterial );
-user.position.y = 200;
+user.position.y = sprite.y;
 scene.add(user);
 
 
+function jump(){
+	if (sprite.jumping == false){
+		sprite.y += 50;
+		sprite.jumping = true;
+		console.log(sprite.y);
+	}
+}
 
+document.addEventListener("keydown", keyDown);
+
+function keyDown(e){
+					switch(32){//space
+						case KEYCODE_SPACE:
+							jump();
+							break;
+					}
+};
 
 function render() {
 	requestAnimationFrame( render );
 	renderer.render( scene, camera );
-}
+};
 
 
 
@@ -44,10 +66,25 @@ function animate(){
 	requestAnimationFrame( animate );
 
 
-	if (user.position.y <= (cube.position.y + sprite.height)){
-	}
-	else user.position.y -= gravity;
-  render();
+		if (sprite.jumping == true && jumpHight <= 50){
+			jumpHight +=1;
+			user.position.y += 2;
+			console.log(jumpHight);
+			if (jumpHight == 50){
+				sprite.jumping = false;
+				console.log(sprite.jumping);
+			}
+		}
 
+	if (sprite.jumping == false){
+		if (user.position.y <= (cube.position.y + sprite.height)){
+		}
+		else user.position.y -= 2;
+
+		jumpHight = 0;
+	}
+
+
+	render();
 }
 animate();
