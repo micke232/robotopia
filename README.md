@@ -4,21 +4,21 @@ School project with Sofie Kedvik
 
 To do list:
 
-- [] Pyshics
+- [ ] Pyshics
  - [x] Gravity
- - [] Movement
+ - [ ] Movement
 
-- [] Collustion
+- [ ] Collustion
  - [x] Platforms
- - [] Objects
+ - [ ] Objects
  
-- [] Sprites
- - [] Movement
- - [] Start Animation
+- [ ] Sprites
+ - [ ] Movement
+ - [ ] Start Animation
  
-- [] World
- - [] Skybox
- - [] Rain
+- [ ] World
+ - [ ] Skybox
+ - [ ] Rain
  
  
  More to come
