@@ -3,7 +3,8 @@ var KEYCODE_LEFT = 37;
 var KEYCODE_RIGHT = 39;
 var holdLeft = false;
 var holdRight = false;
-var gravity = 1;
+var spaceButton = false;
+var gravity = 10;
 var jumpHight = 0;
 var sprite = {
 	jumping: false,
@@ -11,7 +12,7 @@ var sprite = {
 	height: 50,
 	x: NaN,
 	y: 50
-}
+};
 
 
 var scene = new THREE.Scene();
@@ -51,10 +52,11 @@ document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
 function keyDown(e){
-	console.log(e.keyCode);
+
 	switch(e.keyCode){//space
 		case KEYCODE_SPACE:
-			jump();
+			if (spaceButton == false) jump(); //Kollar så space inte redan är tryckt
+			spaceButton = true;
 			break;
 		case KEYCODE_LEFT:
 			holdLeft = true;
@@ -68,9 +70,6 @@ function keyDown(e){
 function keyUp(e){
 
 	switch(e.keyCode){//space
-		case KEYCODE_SPACE:
-			jump();
-			break;
 		case KEYCODE_LEFT:
 			holdLeft = false;
 			break;
@@ -89,26 +88,20 @@ function render() {
 
 function animate(){
 	requestAnimationFrame( animate );
-
-
 	if (sprite.jumping == true && jumpHight <= 50){
 		jumpHight +=2;
 		user.position.y += sprite.jumpSpeed;
-
 		if (jumpHight == 50){
 			sprite.jumping = false;
-
 		}
 	}
-
 	if (sprite.jumping == false){
 		if (user.position.y <= (cube.position.y + sprite.height)){
+			spaceButton = false; //Gör så man inte kan hoppa mer än en gång.
 		}
 		else user.position.y -= sprite.jumpSpeed;
-
 		jumpHight = 0;
 	}
-
 	if (holdLeft == true){
 		user.position.x -= 5;
 	}
@@ -116,8 +109,6 @@ function animate(){
 	if (holdRight == true){
 		user.position.x += 5;
 	}
-
-
 	render();
 }
 animate();
