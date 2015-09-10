@@ -41,9 +41,6 @@ var createObject = {
 
 writeWorld();
 function writeWorld(){
-	//small
-
-	createObject.smallPlatform.;
 	//large
 	createObject.largePlatform.create(-100,-100);
 	createObject.largePlatform.create(-300,-300);
