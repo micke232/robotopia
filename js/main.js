@@ -6,12 +6,22 @@ var holdRight = false;
 var spaceButton = false;
 var gravity = 10;
 var jumpHight = 0;
+var inAir = true;
+var objectArray = [];
+
 var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
 	height: 50,
 	x: NaN,
-	y: 50
+	y: 200 //startposition
+};
+
+var gravity = {
+	posY: 0,
+	velocity: 0,
+	acceleration: 10,
+	jumping: inAir,
 };
 
 
@@ -28,12 +38,13 @@ var material = new THREE.MeshBasicMaterial( {
 } );
 
 var cube = new THREE.Mesh( geometry, material );
+objectArray.push(cube);
 scene.add( cube );
 
-camera.position.z = 200;
+camera.position.z = 400;
 camera.position.y = 100;
 
-var userGeometry = new THREE.BoxGeometry( 50, 100, 1 );
+var userGeometry = new THREE.PlaneGeometry( 50, 100, 10 );
 var userMaterial = new THREE.MeshBasicMaterial( {
 	color: "red"
 } );
@@ -85,23 +96,48 @@ function render() {
 };
 
 
-
+var bugger = false;
 function animate(){
 	requestAnimationFrame( animate );
+
+
+	//colluision detection
+	var originPoint = user.position.clone();
+	for (var i = 0; i < user.geometry.vertices.length; i++){
+
+		var localVertex = user.geometry.vertices[i].clone();
+		var globalVertex = localVertex.applyMatrix4(user.matrixWorld);
+		var directionVector = globalVertex.sub(user.position);
+
+		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
+
+		var collisionResult = ray.intersectObjects(objectArray);
+
+		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt
+			inAir = false;
+		}
+		else inAir = true;
+	};
+
 	if (sprite.jumping == true && jumpHight <= 50){
 		jumpHight +=2;
 		user.position.y += sprite.jumpSpeed;
-		if (jumpHight == 50){
+		if (jumpHight >= 50){
 			sprite.jumping = false;
 		}
 	}
+
 	if (sprite.jumping == false){
-		if (user.position.y <= (cube.position.y + sprite.height)){
+		if (user.position.y <= (cube.position.y + sprite.height) && !inAir){
 			spaceButton = false; //Gör så man inte kan hoppa mer än en gång.
 		}
 		else user.position.y -= sprite.jumpSpeed;
 		jumpHight = 0;
 	}
+
+
+
+
 	if (holdLeft == true){
 		user.position.x -= 5;
 	}
@@ -109,6 +145,7 @@ function animate(){
 	if (holdRight == true){
 		user.position.x += 5;
 	}
+
 	render();
 }
 animate();
