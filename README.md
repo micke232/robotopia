@@ -8,7 +8,7 @@ To do list:
  - [x] Gravity
  - [ ] Movement
 
-- [ ] Collustion
+- [ ] Collision
  - [x] Platforms
  - [ ] Objects
  

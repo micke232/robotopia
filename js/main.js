@@ -4,8 +4,7 @@ var KEYCODE_RIGHT = 39;
 var holdLeft = false;
 var holdRight = false;
 var spaceButton = false;
-var gravity = 10;
-var jumpHight = 0;
+var jumpHight = 100;
 var inAir = true;
 var objectArray = [];
 
@@ -19,8 +18,9 @@ var sprite = {
 
 var gravity = {
 	posY: 0,
-	velocity: 0,
-	acceleration: 10,
+	velocity: 15, //hastighet
+	mass: 5,
+	accel: -80,
 	jumping: inAir,
 };
 
@@ -32,7 +32,7 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-var geometry = new THREE.BoxGeometry( 200, 10, 50 );
+var geometry = new THREE.BoxGeometry( 50, 10, 50 );
 var material = new THREE.MeshBasicMaterial( {
 	color: 0x00ff00
 } );
@@ -55,6 +55,7 @@ scene.add(user);
 
 function jump(){
 	if (sprite.jumping == false){
+		gravity.posY = user.position.y;
 		sprite.jumping = true;
 	}
 }
@@ -100,7 +101,8 @@ var bugger = false;
 function animate(){
 	requestAnimationFrame( animate );
 
-
+camera.position.x = user.position.x;
+camera.position.y = user.position.y;
 	//colluision detection
 	var originPoint = user.position.clone();
 	for (var i = 0; i < user.geometry.vertices.length; i++){
@@ -115,25 +117,54 @@ function animate(){
 
 		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt
 			inAir = false;
+			gravity.accel = -80;
+
 		}
 		else inAir = true;
 	};
 
-	if (sprite.jumping == true && jumpHight <= 50){
-		jumpHight +=2;
-		user.position.y += sprite.jumpSpeed;
-		if (jumpHight >= 50){
+
+
+	if (sprite.jumping == true && gravity.posY + jumpHight > user.position.y){
+
+		user.position.y += (gravity.velocity * gravity.mass) / gravity.accel;
+		gravity.accel += 1;
+
+		if (gravity.posY + jumpHight < user.position.y){
 			sprite.jumping = false;
 		}
 	}
 
 	if (sprite.jumping == false){
-		if (user.position.y <= (cube.position.y + sprite.height) && !inAir){
-			spaceButton = false; //Gör så man inte kan hoppa mer än en gång.
+		if (inAir){
+			user.position.y += (gravity.velocity * gravity.mass) / gravity.accel;
+			gravity.accel += 1;
 		}
-		else user.position.y -= sprite.jumpSpeed;
-		jumpHight = 0;
 	}
+
+
+
+
+
+//	if (sprite.jumping == true && jumpHight <= 50){
+//		jumpHight +=2;
+//		user.position.y += sprite.jumpSpeed;
+//		if (jumpHight >= 50){
+//			sprite.jumping = false;
+//		}
+//	}
+//
+//	if (sprite.jumping == false){
+//		if (user.position.y <= (cube.position.y + sprite.height) && !inAir){
+//			spaceButton = false; //Gör så man inte kan hoppa mer än en gång.
+//		}
+//	if (inAir){
+//		user.position.y -= gravity.velocity;
+//	}
+
+//		else ;
+//		jumpHight = 0;
+//	}
 
 
 
