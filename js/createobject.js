@@ -45,6 +45,7 @@ function writeWorld(){
 	createObject.largePlatform.create(-100,-100);
 	createObject.largePlatform.create(-300,-300);
 	createObject.largePlatform.create(-500,-500);
+	createObject.largePlatform.create(-700,-1200);
 }
 
 
