@@ -4,9 +4,9 @@ School project with Sofie Kedvik
 
 To do list:
 
-- [ ] Pyshics
+- [x] Pyshics
  - [x] Gravity
- - [ ] Movement
+ - [x] Movement
 
 - [ ] Collision
  - [x] Platforms
