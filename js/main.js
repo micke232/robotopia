@@ -4,7 +4,7 @@ var KEYCODE_RIGHT = 39;
 var holdLeft = false;
 var holdRight = false;
 var spaceButton = false;
-var jumpHight = 200;
+var jumpHight = 250;
 var inAir = true;
 var objectArray = [];
 
@@ -13,12 +13,12 @@ var sprite = {
 	jumpSpeed: 10,
 	height: 50,
 	x: NaN,
-	y: 100 //startposition
+	y: 80 //startposition
 };
 
 var gravity = {
 	posY: 0,
-	velocity: 25, //hastighet
+	velocity: 30, //hastighet
 	mass: 25,
 	accel: -80,
 	jumping: inAir,
@@ -27,27 +27,20 @@ var gravity = {
 
 
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 20000 );
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-var geometry = new THREE.BoxGeometry( 50, 10, 50 );
-var material = new THREE.MeshBasicMaterial( {
-	color: 0x00ff00
-} );
 
-var cube = new THREE.Mesh( geometry, material );
-objectArray.push(cube);
-scene.add( cube );
+camera.position.z = 500;
 
-camera.position.z = 400;
-camera.position.y = 100;
 
 var userGeometry = new THREE.PlaneGeometry( 50, 100, 10 );
 var userMaterial = new THREE.MeshBasicMaterial( {
-	color: "red"
+	transparent: true,
+	map: THREE.ImageUtils.loadTexture("images/hero.png")
 } );
 var user = new THREE.Mesh( userGeometry, userMaterial );
 user.position.y = sprite.y;
@@ -112,38 +105,26 @@ function animate(){
 		var localVertex = user.geometry.vertices[i].clone();
 		var globalVertex = localVertex.applyMatrix4(user.matrixWorld);
 		var directionVector = globalVertex.sub(user.position);
-
 		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
-
 		var collisionResult = ray.intersectObjects(objectArray);
 
 		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt
 			inAir = false;
 			spaceButton = false;
 			gravity.accel = -80;
-
 		}
 		else inAir = true;
 	};
 
-
-
 	if (sprite.jumping == true && gravity.posY + jumpHight > user.position.y){
-
 		user.position.y -= (gravity.velocity * gravity.mass) / gravity.accel;
-
 			gravity.accel += 1;
-
-
-
 		if (gravity.posY + jumpHight < user.position.y){
       console.log(gravity.accel);
 			gravity.accel = -80;
 			sprite.jumping = false;
 		}
 	}
-
-
 	if (sprite.jumping == false){ //faller
 		if (inAir){
 			user.position.y += (gravity.velocity * gravity.mass) / gravity.accel;
@@ -156,15 +137,23 @@ function animate(){
 			}
 		}
 	}
-
 	if (holdLeft == true){
-		user.position.x -= 5;
+		user.position.x -= 7;
+	}
+	if (holdRight == true){
+		user.position.x += 7;
 	}
 
-	if (holdRight == true){
-		user.position.x += 5;
+	//rain
+	for (var i = 0; i < rain.length; i++){
+		rain[i].position.y -= 10;
+		rain[i].position.x -= 1;
+		if (rain[i].position.y < -1000){
+			rain[i].position.y = 1000;
+		}
 	}
 
 	render();
 }
 animate();
+createSky();
