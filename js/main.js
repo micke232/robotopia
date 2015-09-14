@@ -7,7 +7,10 @@ var spaceButton = false;
 var jumpHight = 250;
 var inAir = true;
 var objectArray = [];
-
+var rain = [];
+var inventory = [];
+var spareParts = [];
+var platformCounter = 0;
 var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
@@ -34,10 +37,10 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z = 500;
+camera.position.z = 600;
 
 
-var userGeometry = new THREE.PlaneGeometry( 50, 100, 10 );
+var userGeometry = new THREE.PlaneGeometry( 100, 100, 10 );
 var userMaterial = new THREE.MeshBasicMaterial( {
 	transparent: true,
 	map: THREE.ImageUtils.loadTexture("images/hero.png")
@@ -98,6 +101,8 @@ function animate(){
 
 	camera.position.x = user.position.x;
 	camera.position.y = user.position.y;
+	background.position.y = camera.position.y;
+	background.position.x = camera.position.x;
 	//colluision detection
 	var originPoint = user.position.clone();
 	for (var i = 0; i < user.geometry.vertices.length; i++){
@@ -108,19 +113,42 @@ function animate(){
 		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
 		var collisionResult = ray.intersectObjects(objectArray);
 
-		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt
+		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt !!! bug lös !!!
 			inAir = false;
 			spaceButton = false;
 			gravity.accel = -80;
+			if (collisionResult[0].object.name == "moving" && collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){
+				if (!mPlatform.up){ // upp
+					platformCounter += 0.01;
+					mPlatform.position.y += 0.1;
+					mPlatform.position.x += 0.1;
+					user.position.y += 0.1;
+					user.position.x += 0.1;
+					console.log(user.position.x + " " + user.position.y);
+					if (platformCounter > 0) mPlatform.up = true;
+
+				}
+
+				if (mPlatform.up){ // ner
+					platformCounter -= 0.01;
+					mPlatform.position.y -= 0.1;
+					mPlatform.position.x -= 0.1;
+					user.position.y -= 0.1;
+					user.position.x -= 0.1;
+					console.log(user.position.x + " " + user.position.y);
+					if (platformCounter < - 50) mPlatform.up = false;
+
+				}
+			}
+
 		}
 		else inAir = true;
 	};
 
 	if (sprite.jumping == true && gravity.posY + jumpHight > user.position.y){
 		user.position.y -= (gravity.velocity * gravity.mass) / gravity.accel;
-			gravity.accel += 1;
+		gravity.accel += 1;
 		if (gravity.posY + jumpHight < user.position.y){
-      console.log(gravity.accel);
 			gravity.accel = -80;
 			sprite.jumping = false;
 		}
@@ -133,10 +161,10 @@ function animate(){
 			}
 			if (gravity.accel > -2) {
 				gravity.max = true;
-
 			}
 		}
 	}
+
 	if (holdLeft == true){
 		user.position.x -= 7;
 	}
@@ -146,14 +174,19 @@ function animate(){
 
 	//rain
 	for (var i = 0; i < rain.length; i++){
-		rain[i].position.y -= 10;
-		rain[i].position.x -= 1;
+		rain[i].position.y -= 15;
+		rain[i].position.x -= 3;
+
 		if (rain[i].position.y < -1000){
 			rain[i].position.y = 1000;
+			rain[i].position.x = randomGenerator();
 		}
 	}
+	//moving platforms
+
+
 
 	render();
 }
 animate();
-createSky();
+

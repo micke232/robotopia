@@ -1,5 +1,5 @@
 
-var rain = [];
+
 var particleMaterial = new THREE.MeshLambertMaterial({
 	emissive: "#001dff",
 	doubleSided: true,
@@ -13,10 +13,10 @@ var posX,
 		posZ,
 		cloneParticle;
 
-var particleGeometry = new THREE.CircleGeometry(4,4);
+var particleGeometry = new THREE.CircleGeometry(3,3);
 var particleMesh = new THREE.Mesh(particleGeometry, particleMaterial);
 
-var particleCount = 1000;
+var particleCount = 500;
 
 
 for (var i = 0; i < particleCount; i++){
@@ -30,5 +30,5 @@ for (var i = 0; i < particleCount; i++){
 };
 
 function randomGenerator(){
-	return Math.floor((Math.random() * 1000) - 500);
+	return Math.floor((Math.random() * 4000) - 2000);
 };
