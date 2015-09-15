@@ -1,9 +1,13 @@
 var mPlatform;
+var fixMovingPlatform;
 var createObject = {
 	smallPlatform: { //g = geometry
 		gx: 200,
 		gy: 20,
 		gz: 30,
+		fx: 50,
+		fy: 20,
+		fz: 30,
 		create: function(posX,posY){
 			var smallGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz );
 			var smallMaterial = new THREE.MeshPhongMaterial( {
@@ -15,13 +19,18 @@ var createObject = {
 			smallPlatform.position.y = posY;
 			objectArray.push(smallPlatform);
 			scene.add(smallPlatform);
+			fulHack(posX,posY,this.fx,this.fy,this.fz);
 		}
+
 	},
 
 	largePlatform: { //g = geometry
 		gx: 400,
 		gy: 20,
 		gz: 50,
+		fx: 50,
+		fy: 20,
+		fz: 50,
 		create: function(posX,posY){
 			var largeGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz );
 			var largeMaterial = new THREE.MeshPhongMaterial( {
@@ -33,6 +42,8 @@ var createObject = {
 			largePlatform.name = "kek";
 			objectArray.push(largePlatform);
 			scene.add(largePlatform);
+			var posXfix = posX + 100;
+			fulHack(posXfix,posY,this.fx,this.fy,this.fz);
 		}
 	},
 
@@ -40,6 +51,10 @@ var createObject = {
 		gx: 200,
 		gy: 20,
 		gz: 30,
+		fx: 50,
+		fy: 20,
+		fz: 30,
+		name: "moving",
 		create: function(posX,posY){
 			var movingGeometry = new THREE.BoxGeometry(this.gx, this.gy, this.gz);
 			var movingMaterial = new THREE.MeshPhongMaterial( {
@@ -50,9 +65,11 @@ var createObject = {
 			mPlatform.position.x = posX;
 			mPlatform.position.y = posY;
 			mPlatform.up = true;
-			mPlatform.name = "moving";
+			mPlatform.name = this.name;
 			objectArray.push(mPlatform);
 			scene.add(mPlatform);
+			fulHackMoving(posX,posY,this.fx,this.fy,this.fz,this.name);
+
 		}
 	},
 
@@ -61,7 +78,7 @@ var createObject = {
 		gy: 50,
 		gz: 10,
 		create: function(posX,posY,spareName){
-			var spareGeometry = new THREE.PlaneGeometry( this.gx, this.gy, this.gz);
+			var spareGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz);
 			var spareMaterial = new THREE.MeshPhongMaterial( {
 				transparent: true,
 				map: THREE.ImageUtils.loadTexture("images/sparepart.png"),
@@ -70,7 +87,7 @@ var createObject = {
 			sparePart.position.x = posX;
 			sparePart.position.y = posY;
 			sparePart.name = spareName;
-			objectArray.push(sparePart);
+			sparePartArray.push(sparePart);
 			scene.add(sparePart);
 		}
 	}
@@ -94,20 +111,46 @@ function writeWorld(){
 	createObject.largePlatform.create(-1100,600);
 	createObject.largePlatform.create(-1900,600);
 	//spare parts
-	createObject.sparePart.create(800,250, "ett");
-  //
+	createObject.sparePart.create(-1100,-450, "ett");
+	//moving platforms
 	createObject.movingPlatform.create(-400,0);
 }
 
 //background
-var backgroundGeometry = new THREE.PlaneGeometry( 8887, 4032 , 1 );
+var backgroundGeometry = new THREE.PlaneGeometry( 3000, 2000 , 1 );
 var backgroundMaterial = new THREE.MeshPhongMaterial( {
-	map: THREE.ImageUtils.loadTexture("images/skydome.jpg"),
+	map: THREE.ImageUtils.loadTexture("images/background.jpg"),
 });
 var background = new THREE.Mesh( backgroundGeometry, backgroundMaterial );
-background.position.z = -2000;
+background.position.z = -350;
 
 scene.add(background);
 
 
+function fulHack(posX,posY,fx,fy,fz){
+	var fixGeometry = new THREE.BoxGeometry(fx,fy,fz);
+	var fixMaterial = new THREE.MeshPhongMaterial( {
+		visible: false,
+		color: "red",
 
+	});
+	var fixPlatform = new THREE.Mesh(fixGeometry, fixMaterial);
+	fixPlatform.position.x = posX + 125;
+	fixPlatform.position.y = posY;
+	objectArray.push(fixPlatform);
+	scene.add(fixPlatform);
+};
+
+function fulHackMoving(posX,posY,fx,fy,fz){
+	var fixMovingGeometry = new THREE.BoxGeometry(fx,fy,fz);
+	var fixMovingMaterial = new THREE.MeshPhongMaterial( {
+		visible: false,
+		color: "red",
+
+	});
+	fixMovingPlatform = new THREE.Mesh(fixMovingGeometry, fixMovingMaterial);
+	fixMovingPlatform.position.x = posX + 125;
+	fixMovingPlatform.position.y = posY;
+	objectArray.push(fixMovingPlatform);
+	scene.add(fixMovingPlatform);
+}
