@@ -1,7 +1,8 @@
 
 
 var particleMaterial = new THREE.MeshLambertMaterial({
-	emissive: "#001dff",
+	emissive: "#00ff0a",
+	color: "green",
 	doubleSided: true,
 	transparent: true,
 	map: THREE.ImageUtils.loadTexture("images/spriteparticle.png")
@@ -13,7 +14,7 @@ var posX,
 		posZ,
 		cloneParticle;
 
-var particleGeometry = new THREE.CircleGeometry(3,3);
+var particleGeometry = new THREE.CircleGeometry(5,25);
 var particleMesh = new THREE.Mesh(particleGeometry, particleMaterial);
 
 var particleCount = 500;
@@ -25,6 +26,7 @@ for (var i = 0; i < particleCount; i++){
 	posZ = randomGenerator();
 	cloneParticle = particleMesh.clone();
 	cloneParticle.position.set(posX, posY, posZ);
+
 	rain.push(cloneParticle);
 	scene.add(cloneParticle);
 };
