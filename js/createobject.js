@@ -100,9 +100,9 @@ function writeWorld(){
 }
 
 //background
-var backgroundGeometry = new THREE.PlaneGeometry( 8887, 4032 , 1 );
+var backgroundGeometry = new THREE.PlaneGeometry( 9000, 6000 , 1 );
 var backgroundMaterial = new THREE.MeshPhongMaterial( {
-	map: THREE.ImageUtils.loadTexture("images/skydome.jpg"),
+	map: THREE.ImageUtils.loadTexture("images/background.jpg"),
 });
 var background = new THREE.Mesh( backgroundGeometry, backgroundMaterial );
 background.position.z = -2000;

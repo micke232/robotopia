@@ -27,7 +27,10 @@ var gravity = {
 	jumping: inAir,
 	max: false
 };
-
+var Robot = "normal.png";
+var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
+var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
+var robotMaterial = THREE.ImageUtils.loadTexture("images/" + Robot);
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 20000 );
@@ -40,14 +43,18 @@ document.body.appendChild( renderer.domElement );
 camera.position.z = 600;
 
 
-var userGeometry = new THREE.PlaneGeometry( 100, 100, 10 );
+//the robot and User
+
+var userGeometry = new THREE.PlaneGeometry( 150, 150, 10 );
 var userMaterial = new THREE.MeshBasicMaterial( {
 	transparent: true,
-	map: THREE.ImageUtils.loadTexture("images/hero.png")
+	map: robotMaterial 
 } );
 var user = new THREE.Mesh( userGeometry, userMaterial );
 user.position.y = sprite.y;
 scene.add(user);
+
+
 
 
 function jump(){
@@ -55,6 +62,7 @@ function jump(){
 		gravity.accel = 1;
 		gravity.posY = user.position.y;
 		sprite.jumping = true;
+
 	}
 }
 
@@ -75,9 +83,15 @@ function keyDown(e){
 			holdRight = true;
 			break;
 	}
+
+	userMaterial.needsUpdate = true;
+	user.needsUpdate = true;
+	robotMaterial.needsUpdate = true;
+
 };
 
 function keyUp(e){
+
 
 	switch(e.keyCode){//space
 		case KEYCODE_LEFT:
@@ -167,9 +181,15 @@ function animate(){
 
 	if (holdLeft == true){
 		user.position.x -= 7;
+		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotLeft[0]);
+		console.log(RobotLeft[0]);
+		RobotLeft.push(RobotLeft.shift());
 	}
 	if (holdRight == true){
 		user.position.x += 7;
+		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotRight[0]);
+		console.log(RobotRight[0]);
+		RobotRight.push(RobotRight.shift());
 	}
 
 	//rain
