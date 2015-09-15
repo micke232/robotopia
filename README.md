@@ -12,9 +12,9 @@ To do list:
  - [x] Platforms
  - [ ] Objects
  
-- [ ] Sprites
- - [ ] Movement
- - [ ] Start Animation
+- [x] Sprites
+ - [x] Movement
+ - [x] Start Animation
  
 - [ ] World
  - [ ] Skybox
