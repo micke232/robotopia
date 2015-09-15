@@ -43,8 +43,6 @@ document.body.appendChild( renderer.domElement );
 
 camera.position.z = 600;
 
-
-
 //the robot and User
 
 

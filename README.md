@@ -12,13 +12,16 @@ To do list:
  - [x] Platforms
  - [ ] Objects
  
-- [x] Sprites
+- [ ] Sprites
  - [x] Movement
  - [x] Start Animation
+ - [ ] Fix speed
  
-- [ ] World
- - [ ] Skybox
+- [x] World
  - [x] Rain
+ - [ ] Foreground image
+ - [ ] Create textures
+  - [ ] Platforms
  
  
  More to come
