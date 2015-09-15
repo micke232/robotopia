@@ -18,7 +18,7 @@ To do list:
  
 - [ ] World
  - [ ] Skybox
- - [ ] Rain
+ - [x] Rain
  
  
  More to come

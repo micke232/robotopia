@@ -1,6 +1,6 @@
 function createSky(){
 	var skyGeo = new THREE.SphereGeometry(2000, 25, 25);
-	var texture = THREE.ImageUtils.loadTexture( "images/skydome.jpg" );
+	var texture = THREE.ImageUtils.loadTexture( "images/background.jpg" );
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
 	texture.repeat.set( 1, 1 );

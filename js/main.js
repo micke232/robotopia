@@ -9,7 +9,7 @@ var inAir = true;
 var objectArray = [];
 var rain = [];
 var inventory = [];
-var spareParts = [];
+var sparePartArray = [];
 var platformCounter = 0;
 var sprite = {
 	jumping: false,
@@ -27,6 +27,7 @@ var gravity = {
 	jumping: inAir,
 	max: false
 };
+
 var Robot = "normal.png";
 var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
 var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
@@ -51,6 +52,7 @@ var userMaterial = new THREE.MeshBasicMaterial( {
 	map: robotMaterial 
 } );
 var user = new THREE.Mesh( userGeometry, userMaterial );
+user.needsUpdate = true;
 user.position.y = sprite.y;
 scene.add(user);
 
@@ -68,7 +70,7 @@ function jump(){
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
-
+var spriteCounter = 0;
 function keyDown(e){
 
 	switch(e.keyCode){//space
@@ -81,6 +83,14 @@ function keyDown(e){
 			break;
 		case KEYCODE_RIGHT:
 			holdRight = true;
+
+
+
+			renderer.render( scene, camera );
+			spriteCounter += 1;
+			if (spriteCounter == 3)
+
+				console.log(spriteCounter);
 			break;
 	}
 
@@ -118,6 +128,7 @@ function animate(){
 	background.position.y = camera.position.y;
 	background.position.x = camera.position.x;
 	//colluision detection
+
 	var originPoint = user.position.clone();
 	for (var i = 0; i < user.geometry.vertices.length; i++){
 
@@ -127,18 +138,20 @@ function animate(){
 		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
 		var collisionResult = ray.intersectObjects(objectArray);
 
-		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt !!! bug lös !!!
+		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt !!! bug löst med fulhack, letar fortfarande efter en bättre lösning !!!
 			inAir = false;
 			spaceButton = false;
 			gravity.accel = -80;
+			//moving platform
 			if (collisionResult[0].object.name == "moving" && collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){
 				if (!mPlatform.up){ // upp
 					platformCounter += 0.01;
 					mPlatform.position.y += 0.1;
 					mPlatform.position.x += 0.1;
+					fixMovingPlatform.position.y += 0.1;
+					fixMovingPlatform.position.x += 0.1;
 					user.position.y += 0.1;
 					user.position.x += 0.1;
-					console.log(user.position.x + " " + user.position.y);
 					if (platformCounter > 0) mPlatform.up = true;
 
 				}
@@ -147,13 +160,15 @@ function animate(){
 					platformCounter -= 0.01;
 					mPlatform.position.y -= 0.1;
 					mPlatform.position.x -= 0.1;
+					fixMovingPlatform.position.y -= 0.1;
+					fixMovingPlatform.position.x -= 0.1;
 					user.position.y -= 0.1;
 					user.position.x -= 0.1;
-					console.log(user.position.x + " " + user.position.y);
 					if (platformCounter < - 50) mPlatform.up = false;
 
 				}
 			}
+
 
 		}
 		else inAir = true;
@@ -202,7 +217,8 @@ function animate(){
 			rain[i].position.x = randomGenerator();
 		}
 	}
-	//moving platforms
+
+//pick up sparepart
 
 
 
