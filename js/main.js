@@ -39,8 +39,8 @@ document.body.appendChild( renderer.domElement );
 
 camera.position.z = 600;
 
-
-var userGeometry = new THREE.PlaneGeometry( 100, 100, 10 );
+// user created
+var userGeometry = new THREE.PlaneGeometry( 100, 100, 10);
 var userMaterial = new THREE.MeshBasicMaterial( {
 	transparent: true,
 	map: THREE.ImageUtils.loadTexture("images/normal.png")
@@ -51,13 +51,6 @@ user.position.y = sprite.y;
 scene.add(user);
 
 
-function jump(){
-	if (sprite.jumping == false && inAir == false){
-		gravity.accel = 1;
-		gravity.posY = user.position.y;
-		sprite.jumping = true;
-	}
-}
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
@@ -80,8 +73,6 @@ function keyDown(e){
 			renderer.render( scene, camera );
 			spriteCounter += 1;
 			if (spriteCounter == 3)
-
-				console.log(spriteCounter);
 			break;
 	}
 };
@@ -110,7 +101,7 @@ function animate(){
 
 	camera.position.x = user.position.x;
 	camera.position.y = user.position.y;
-	background.position.y = camera.position.y;
+	background.position.y = camera.position.y + 200;
 	background.position.x = camera.position.x;
 	//colluision detection
 
@@ -197,11 +188,13 @@ function animate(){
 		}
 	}
 
-//pick up sparepart
+	//pick up sparepart
 
 
 
 	render();
 }
+
 animate();
+
 

@@ -14,7 +14,7 @@ var createObject = {
 				map: THREE.ImageUtils.loadTexture("images/platform.jpg"),
 
 			});
-			var smallPlatform = new THREE.Mesh( smallGeometry, smallMaterial );
+			var smallPlatform = new THREE.Mesh(smallGeometry, smallMaterial);
 			smallPlatform.position.x = posX;
 			smallPlatform.position.y = posY;
 			objectArray.push(smallPlatform);
@@ -78,7 +78,7 @@ var createObject = {
 		gy: 50,
 		gz: 10,
 		create: function(posX,posY,spareName){
-			var spareGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz);
+			var spareGeometry = new THREE.PlaneGeometry( this.gx, this.gy, this.gz);
 			var spareMaterial = new THREE.MeshPhongMaterial( {
 				transparent: true,
 				map: THREE.ImageUtils.loadTexture("images/sparepart.png"),
@@ -112,19 +112,28 @@ function writeWorld(){
 	createObject.largePlatform.create(-1900,600);
 	//spare parts
 	createObject.sparePart.create(-1100,-450, "ett");
+	createObject.sparePart.create(200, 50, "två");
 	//moving platforms
 	createObject.movingPlatform.create(-400,0);
 }
 
-//background
+
+//background created
+
 var backgroundGeometry = new THREE.PlaneGeometry( 3000, 2000 , 1 );
 var backgroundMaterial = new THREE.MeshPhongMaterial( {
 	map: THREE.ImageUtils.loadTexture("images/background.jpg"),
 });
 var background = new THREE.Mesh( backgroundGeometry, backgroundMaterial );
 background.position.z = -350;
-
 scene.add(background);
+function jump(){
+	if (sprite.jumping == false && inAir == false){
+		gravity.accel = 1;
+		gravity.posY = user.position.y;
+		sprite.jumping = true;
+	}
+}
 
 
 function fulHack(posX,posY,fx,fy,fz){
