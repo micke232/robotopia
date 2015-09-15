@@ -32,7 +32,7 @@ var Robot = "normal.png";
 var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
 var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
 var robotMaterial = THREE.ImageUtils.loadTexture("images/" + Robot);
-
+robotMaterial.minFilter = THREE.LinearFilter;
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 20000 );
 
@@ -51,12 +51,11 @@ camera.position.z = 600;
 // user created
 var userGeometry = new THREE.PlaneGeometry( 100, 100, 10);
 
-var userMaterial = new THREE.MeshBasicMaterial( {
+var userMaterial = new THREE.MeshPhongMaterial( {
 	transparent: true,
 	map: robotMaterial 
 } );
 var user = new THREE.Mesh( userGeometry, userMaterial );
-user.needsUpdate = true;
 user.position.y = sprite.y;
 scene.add(user);
 
@@ -88,24 +87,14 @@ function keyDown(e){
 			break;
 		case KEYCODE_RIGHT:
 			holdRight = true;
-
-
-
-			renderer.render( scene, camera );
-			spriteCounter += 1;
-			if (spriteCounter == 3)
 			break;
 	}
 
-	userMaterial.needsUpdate = true;
-	user.needsUpdate = true;
-	robotMaterial.needsUpdate = true;
+
 
 };
-
+var normal = true;
 function keyUp(e){
-
-
 	switch(e.keyCode){//space
 		case KEYCODE_LEFT:
 			holdLeft = false;
@@ -125,7 +114,6 @@ function render() {
 
 function animate(){
 	requestAnimationFrame( animate );
-
 	camera.position.x = user.position.x;
 	camera.position.y = user.position.y;
 	background.position.y = camera.position.y + 200;
@@ -200,15 +188,19 @@ function animate(){
 	if (holdLeft == true){
 		user.position.x -= 7;
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotLeft[0]);
-		console.log(RobotLeft[0]);
+		user.material.map = robotMaterial;
+		user.material.needsUpdate = true;
+
 		RobotLeft.push(RobotLeft.shift());
 	}
 	if (holdRight == true){
 		user.position.x += 7;
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotRight[0]);
-		console.log(RobotRight[0]);
+		user.material.map = robotMaterial;
+		user.material.needsUpdate = true;
 		RobotRight.push(RobotRight.shift());
 	}
+
 
 	//rain
 	for (var i = 0; i < rain.length; i++){
@@ -220,11 +212,6 @@ function animate(){
 			rain[i].position.x = randomGenerator();
 		}
 	}
-
-	//pick up sparepart
-
-
-
 	render();
 }
 
