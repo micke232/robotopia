@@ -117,6 +117,17 @@ function writeWorld(){
 	createObject.movingPlatform.create(-400,0);
 }
 
+//background with pipes created
+
+var Pipes = new THREE.PlaneGeometry( 6000, 788 , 1 );
+var pipesMaterial = new THREE.MeshPhongMaterial( {
+	map: THREE.ImageUtils.loadTexture("images/pipes.png"),
+	transparent: true
+});
+var pipesBackground = new THREE.Mesh( Pipes, pipesMaterial );
+pipesBackground.position.z = -250;
+pipesBackground.position.y = -300;
+scene.add(pipesBackground);
 
 //background created
 
@@ -127,6 +138,8 @@ var backgroundMaterial = new THREE.MeshPhongMaterial( {
 var background = new THREE.Mesh( backgroundGeometry, backgroundMaterial );
 background.position.z = -350;
 scene.add(background);
+
+
 function jump(){
 	if (sprite.jumping == false && inAir == false){
 		gravity.accel = 1;
