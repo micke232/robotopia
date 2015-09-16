@@ -1,6 +1,7 @@
 var KEYCODE_SPACE = 32;
 var KEYCODE_LEFT = 37;
 var KEYCODE_RIGHT = 39;
+var KEYCODE_ENTER = 13;
 var holdLeft = false;
 var holdRight = false;
 var spaceButton = false;
@@ -28,14 +29,10 @@ var gravity = {
 	max: false
 };
 
-var Robot = "normal.png";
-var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
-var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
-var robotMaterial = THREE.ImageUtils.loadTexture("images/" + Robot);
-robotMaterial.minFilter = THREE.LinearFilter;
+
+
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 20000 );
-
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
@@ -45,6 +42,11 @@ camera.position.z = 600;
 
 //the robot and User
 
+var Robot = "normal.png";
+var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
+var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
+var robotMaterial = THREE.ImageUtils.loadTexture("images/" + Robot);
+robotMaterial.minFilter = THREE.LinearFilter;
 
 // user created
 var userGeometry = new THREE.PlaneGeometry( 100, 100, 10);
@@ -55,6 +57,7 @@ var userMaterial = new THREE.MeshPhongMaterial( {
 } );
 var user = new THREE.Mesh( userGeometry, userMaterial );
 user.position.y = sprite.y;
+user.minFilter = THREE.LinearFilter;
 scene.add(user);
 
 
@@ -82,9 +85,14 @@ function keyDown(e){
 			break;
 		case KEYCODE_LEFT:
 			holdLeft = true;
+
 			break;
 		case KEYCODE_RIGHT:
 			holdRight = true;
+
+			break;
+		case KEYCODE_ENTER:
+			checkCollision();
 			break;
 	}
 
@@ -189,6 +197,7 @@ function animate(){
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
 
+
 		RobotLeft.push(RobotLeft.shift());
 	}
 	if (holdRight == true){
@@ -196,8 +205,10 @@ function animate(){
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotRight[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
+
 		RobotRight.push(RobotRight.shift());
 	}
+	// check if hit object
 
 
 	//rain
@@ -210,9 +221,27 @@ function animate(){
 			rain[i].position.x = randomGenerator();
 		}
 	}
+
 	render();
 }
+function checkCollision(){
+	for (var i = 0; i < sparePartArray.length; i++){
+		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
+			var deletObject = sparePartArray[i];
+			inventory.push(sparePartArray[i]);
+			sparePartArray.splice(i,1);
+			for (var j = 0; j < scene.children.length; j++){
+				if (deletObject.name == scene.children[j].name){ // fan ta scene.children!
+					scene.remove(scene.children[j]);
+				}
+			};
 
+
+
+		}
+	}
+
+};
 animate();
 
 
