@@ -8,9 +8,9 @@ To do list:
  - [x] Gravity
  - [x] Movement
 
-- [ ] Collision
+- [x] Collision
  - [x] Platforms
- - [ ] Objects
+ - [x] Objects
  
 - [ ] Sprites
  - [x] Movement
@@ -22,6 +22,11 @@ To do list:
  - [ ] Foreground image
  - [ ] Create textures
   - [ ] Platforms
+	
+- [ ] Power Ups
+ - [ ] Double jump
+ - [ ] Speed Boost
+ - [ ] Floating
  
  
  More to come
