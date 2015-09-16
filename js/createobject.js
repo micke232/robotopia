@@ -12,7 +12,6 @@ var createObject = {
 			var smallGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz );
 			var smallMaterial = new THREE.MeshPhongMaterial( {
 				map: THREE.ImageUtils.loadTexture("images/platform.jpg"),
-
 			});
 			var smallPlatform = new THREE.Mesh(smallGeometry, smallMaterial);
 			smallPlatform.position.x = posX;
@@ -21,7 +20,6 @@ var createObject = {
 			scene.add(smallPlatform);
 			fulHack(posX,posY,this.fx,this.fy,this.fz);
 		}
-
 	},
 
 	largePlatform: { //g = geometry
@@ -119,13 +117,13 @@ function writeWorld(){
 
 //background with pipes created
 
-var Pipes = new THREE.PlaneGeometry( 6000, 788 , 1 );
+var Pipes = new THREE.PlaneGeometry( 3000, 400 , 1 );
 var pipesMaterial = new THREE.MeshPhongMaterial( {
 	map: THREE.ImageUtils.loadTexture("images/pipes.png"),
 	transparent: true
 });
 var pipesBackground = new THREE.Mesh( Pipes, pipesMaterial );
-pipesBackground.position.z = -250;
+pipesBackground.position.z = 50;
 pipesBackground.position.y = -300;
 scene.add(pipesBackground);
 

@@ -38,7 +38,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z = 600;
+camera.position.z = 400;
 
 //the robot and User
 
@@ -216,7 +216,7 @@ function animate(){
 		rain[i].position.y -= 15;
 		rain[i].position.x -= 3;
 
-		if (rain[i].position.y < -1000){
+		if (rain[i].position.y < -500){
 			rain[i].position.y = 1000;
 			rain[i].position.x = randomGenerator();
 		}
@@ -235,9 +235,6 @@ function checkCollision(){
 					scene.remove(scene.children[j]);
 				}
 			};
-
-
-
 		}
 	}
 

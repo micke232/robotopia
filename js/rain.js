@@ -1,11 +1,10 @@
 
 
 var particleMaterial = new THREE.MeshLambertMaterial({
-	emissive: "#00ff0a",
-	color: "green",
+
 	doubleSided: true,
 	transparent: true,
-	map: THREE.ImageUtils.loadTexture("images/spriteparticle.png")
+	map: THREE.ImageUtils.loadTexture("images/raindrop.png")
 
 });
 
@@ -14,7 +13,7 @@ var posX,
 		posZ,
 		cloneParticle;
 
-var particleGeometry = new THREE.CircleGeometry(5,25);
+var particleGeometry = new THREE.CircleGeometry(5,20);
 var particleMesh = new THREE.Mesh(particleGeometry, particleMaterial);
 
 var particleCount = 500;

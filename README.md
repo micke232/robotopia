@@ -19,9 +19,10 @@ To do list:
  
 - [x] World
  - [x] Rain
- - [ ] Foreground image
+ - [x] Foreground image
  - [ ] Create textures
   - [ ] Platforms
+  - [ ] Spareparts
 	
 - [ ] Power Ups
  - [ ] Double jump
