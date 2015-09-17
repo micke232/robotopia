@@ -16,6 +16,9 @@ var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
 	height: 50,
+	doubleJump: false,
+	speedBoost: false,
+	airFloat: false,
 	x: NaN,
 	y: 80 //startposition
 };
@@ -38,7 +41,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z = 400;
+camera.position.z = 2000;
 
 //the robot and User
 
@@ -51,10 +54,10 @@ robotMaterial.minFilter = THREE.LinearFilter;
 // user created
 var userGeometry = new THREE.PlaneGeometry( 100, 100, 10);
 
-var userMaterial = new THREE.MeshPhongMaterial( {
+var userMaterial = new THREE.MeshPhongMaterial({
 	transparent: true,
 	map: robotMaterial 
-} );
+});
 var user = new THREE.Mesh( userGeometry, userMaterial );
 user.position.y = sprite.y;
 user.minFilter = THREE.LinearFilter;
