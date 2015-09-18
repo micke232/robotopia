@@ -9,6 +9,7 @@ canvas {
 	height: 100%;
 }
 
+
 footer {
 	position: fixed;
 	bottom:0;
@@ -89,4 +90,10 @@ h3 {
 	-webkit-border-radius:50%;
 	-moz-border-radius:50%;
 	border-radius:50%;
+
+#pickUp {
+	font-family: arial;
+	font-size: 25px;
+	position: fixed;
+
 }

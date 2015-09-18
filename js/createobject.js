@@ -1,5 +1,6 @@
 var mPlatform;
 var fixMovingPlatform;
+var sparePartTextures = [THREE.ImageUtils.loadTexture("images/sparepart_icon.png")];
 var createObject = {
 	smallPlatform: { //g = geometry
 		gx: 200,
@@ -75,11 +76,11 @@ var createObject = {
 		gx: 50,
 		gy: 50,
 		gz: 10,
-		create: function(posX,posY,spareName){
+		create: function(posX,posY,spareName,texture){
 			var spareGeometry = new THREE.PlaneGeometry( this.gx, this.gy, this.gz);
 			var spareMaterial = new THREE.MeshPhongMaterial( {
 				transparent: true,
-				map: THREE.ImageUtils.loadTexture("images/sparepart.png"),
+				map: texture,
 			});
 			var sparePart = new THREE.Mesh( spareGeometry, spareMaterial);
 			sparePart.position.x = posX;
@@ -96,21 +97,41 @@ writeWorld();
 function writeWorld(){
 	//small
 	createObject.smallPlatform.create(400, 400);
-	createObject.smallPlatform.create(200, 600);
 	createObject.smallPlatform.create(-1100, -500);
+	createObject.smallPlatform.create(-1200, 600);
+	createObject.smallPlatform.create(2200, 400);
+	createObject.smallPlatform.create(2400, 600);
+	createObject.smallPlatform.create(2200, 800);
+	createObject.smallPlatform.create(2400, 1000);
+	createObject.smallPlatform.create(2200, 1200);
+	createObject.smallPlatform.create(2400, 1400); //sparepart 3 on this platform
+	createObject.smallPlatform.create(3200, 1600);
+	createObject.smallPlatform.create(3000, 1800);
+	createObject.smallPlatform.create(1000, 1200);
+	createObject.smallPlatform.create(400, 2000);
 
 	//large
 	createObject.largePlatform.create(0,0);
 	createObject.largePlatform.create(400,0);
-	createObject.largePlatform.create(800,0);
+	createObject.largePlatform.create(800,0) ;
 	createObject.largePlatform.create(800,200);
-	createObject.largePlatform.create(-300,600);
-	createObject.largePlatform.create(-700,600);
-	createObject.largePlatform.create(-1100,600);
-	createObject.largePlatform.create(-1900,600);
+	createObject.largePlatform.create(0,600);
+	createObject.largePlatform.create(-400,600);
+	createObject.largePlatform.create(1800,200);
+	createObject.largePlatform.create(3000,1400);
+	createObject.largePlatform.create(2600,2000);
+	createObject.largePlatform.create(2200,2000);
+	createObject.largePlatform.create(1800,2000);
+	createObject.largePlatform.create(1400,2000);
+	createObject.largePlatform.create(1400,1200);
+	createObject.largePlatform.create(200,1200);
+	createObject.largePlatform.create(-200,1200);
+
 	//spare parts
-	createObject.sparePart.create(-1100,-450, "ett");
-	createObject.sparePart.create(200, 50, "två");
+	createObject.sparePart.create(-1100,-450, "one", sparePartTextures[0]);
+	createObject.sparePart.create(-1200, 650, "two", sparePartTextures[0]);
+	createObject.sparePart.create(2400, 1450, "three", sparePartTextures[0]);
+	createObject.sparePart.create(400, 2050, "four", sparePartTextures[0]);
 	//moving platforms
 	createObject.movingPlatform.create(-400,0);
 }
@@ -125,7 +146,7 @@ var pipesMaterial = new THREE.MeshPhongMaterial( {
 var pipesBackground = new THREE.Mesh( Pipes, pipesMaterial );
 pipesBackground.position.z = 50;
 pipesBackground.position.x = 200;
-pipesBackground.position.y = -300;
+pipesBackground.position.y = -450;
 scene.add(pipesBackground);
 
 //background created
