@@ -9,11 +9,14 @@
 body {
 	margin: 0 auto;
 	overflow: hidden;
+	/*border: 5px solid rgba(35, 128, 78, 1);*/
 }
 canvas {
 	width: 100%;
 	height: 100%;
+	/*border: 5px solid rgba(35, 128, 78, 1);*/
 }
+
 
 #pickUp {
 	font-family: 'Poiret One', helvetica, sans-serif;
@@ -105,8 +108,8 @@ h3 {
 	margin: 0 auto;
 	text-align: center;
 	margin-top:-5px;
-	width:15px;
-	height:15px;
+	width:18px;
+	height:18px;
 	margin-left:35px;
 	background: #dd3150;
 	color: white;
@@ -115,4 +118,8 @@ h3 {
 	-webkit-border-radius:50%;
 	-moz-border-radius:50%;
 	border-radius:50%;
+}
 
+#counter{
+	padding-top:2px;
+}

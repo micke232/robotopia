@@ -254,6 +254,8 @@ function animate(){
 	render();
 }
 
+countSparepart.innerHTML = spareCounter;
+
 function checkCollision(){
 	for (var i = 0; i < sparePartArray.length; i++){
 		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
