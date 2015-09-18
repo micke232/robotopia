@@ -1,6 +1,12 @@
 var mPlatform;
 var fixMovingPlatform;
-var sparePartTextures = [THREE.ImageUtils.loadTexture("images/sparepart_icon.png")];
+var sparePartTextures = [
+	THREE.ImageUtils.loadTexture("images/sparepart_icon.png"),
+	THREE.ImageUtils.loadTexture("images/sparepart_2.png"),
+	THREE.ImageUtils.loadTexture("images/sparepart_3.png"),
+	THREE.ImageUtils.loadTexture("images/sparepart_4.png"),
+
+												];
 var createObject = {
 	smallPlatform: { //g = geometry
 		gx: 200,
@@ -129,9 +135,9 @@ function writeWorld(){
 
 	//spare parts
 	createObject.sparePart.create(-1100,-450, "one", sparePartTextures[0]);
-	createObject.sparePart.create(-1200, 650, "two", sparePartTextures[0]);
-	createObject.sparePart.create(2400, 1450, "three", sparePartTextures[0]);
-	createObject.sparePart.create(400, 2050, "four", sparePartTextures[0]);
+	createObject.sparePart.create(-1200, 650, "two", sparePartTextures[1]);
+	createObject.sparePart.create(2400, 1450, "three", sparePartTextures[2]);
+	createObject.sparePart.create(400, 2050, "four", sparePartTextures[3]);
 	//moving platforms
 	createObject.movingPlatform.create(-400,0);
 }
