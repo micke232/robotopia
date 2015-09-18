@@ -26,7 +26,7 @@ To do list:
 	
 - [ ] Power Ups
  - [ ] Double jump
- - [ ] Speed Boost
+ - [x] Speed Boost
  - [ ] Floating
  
  

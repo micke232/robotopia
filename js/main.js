@@ -2,8 +2,11 @@ var KEYCODE_SPACE = 32;
 var KEYCODE_LEFT = 37;
 var KEYCODE_RIGHT = 39;
 var KEYCODE_ENTER = 13;
+var KEYCODE_SHIFT = 16;
+var pickUp = document.getElementById("pickUp");
 var holdLeft = false;
 var holdRight = false;
+var holdShift = false;
 var spaceButton = false;
 var jumpHight = 250;
 var inAir = true;
@@ -12,6 +15,7 @@ var rain = [];
 var inventory = [];
 var sparePartArray = [];
 var platformCounter = 0;
+var jumpCounter = 0;
 var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
@@ -41,7 +45,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z = 2000;
+camera.position.z = 600;
 
 //the robot and User
 
@@ -67,12 +71,14 @@ scene.add(user);
 
 
 function jump(){
+
 	if (sprite.jumping == false && inAir == false){
-		gravity.accel = 1;
+		gravity.accel += 1;
 		gravity.posY = user.position.y;
 		sprite.jumping = true;
-
 	}
+
+
 }
 
 
@@ -85,6 +91,9 @@ function keyDown(e){
 		case KEYCODE_SPACE:
 			if (spaceButton == false) jump(); //Kollar så space inte redan är tryckt
 			spaceButton = true;
+			//			jumpCounter += 1;
+			//			console.log(jumpCounter);
+			//			console.log(sprite.jumping);
 			break;
 		case KEYCODE_LEFT:
 			holdLeft = true;
@@ -96,6 +105,10 @@ function keyDown(e){
 			break;
 		case KEYCODE_ENTER:
 			checkCollision();
+			break;
+
+		case KEYCODE_SHIFT:
+			holdShift = true;
 			break;
 	}
 
@@ -110,6 +123,9 @@ function keyUp(e){
 			break;
 		case KEYCODE_RIGHT:
 			holdRight = false;
+			break;
+		case KEYCODE_SHIFT:
+			holdShift = false;
 			break;
 
 	}
@@ -128,7 +144,9 @@ function animate(){
 	background.position.y = camera.position.y + 200;
 	background.position.x = camera.position.x;
 	//colluision detection
-
+  if (user.position.y < -1000){ //when you die, reload page
+		location.reload();
+	}
 	var originPoint = user.position.clone();
 	for (var i = 0; i < user.geometry.vertices.length; i++){
 
@@ -173,7 +191,9 @@ function animate(){
 		}
 		else inAir = true;
 	};
+	//	if (jumpCounter < 2){
 
+	//	}
 	if (sprite.jumping == true && gravity.posY + jumpHight > user.position.y){
 		user.position.y -= (gravity.velocity * gravity.mass) / gravity.accel;
 		gravity.accel += 1;
@@ -194,8 +214,9 @@ function animate(){
 		}
 	}
 
-	if (holdLeft == true){
-		user.position.x -= 7;
+	if (holdLeft){
+		if (holdShift && sprite.speedBoost) user.position.x -= 14;
+		else user.position.x -= 7;
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotLeft[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
@@ -203,8 +224,9 @@ function animate(){
 
 		RobotLeft.push(RobotLeft.shift());
 	}
-	if (holdRight == true){
-		user.position.x += 7;
+	if (holdRight){
+		if (holdShift && sprite.speedBoost) user.position.x += 14;
+		else user.position.x += 7;
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotRight[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
@@ -227,9 +249,12 @@ function animate(){
 
 	render();
 }
+
 function checkCollision(){
 	for (var i = 0; i < sparePartArray.length; i++){
 		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
+			if (sparePartArray[i].name == "one") sprite.speedBoost = true;
+			pickUp.innerHTML = "You picked up the speed boost, hold down shift and run superduperfast!"
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);
 			sparePartArray.splice(i,1);

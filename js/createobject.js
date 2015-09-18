@@ -1,6 +1,6 @@
 var mPlatform;
 var fixMovingPlatform;
-var sparePartTextures = [THREE.ImageUtils.loadTexture("images/sparepart.png")];
+var sparePartTextures = [THREE.ImageUtils.loadTexture("images/sparepart_icon.png")];
 var createObject = {
 	smallPlatform: { //g = geometry
 		gx: 200,
@@ -146,7 +146,7 @@ var pipesMaterial = new THREE.MeshPhongMaterial( {
 var pipesBackground = new THREE.Mesh( Pipes, pipesMaterial );
 pipesBackground.position.z = 50;
 pipesBackground.position.x = 200;
-pipesBackground.position.y = -300;
+pipesBackground.position.y = -450;
 scene.add(pipesBackground);
 
 //background created
