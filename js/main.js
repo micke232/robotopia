@@ -16,6 +16,10 @@ var inventory = [];
 var sparePartArray = [];
 var platformCounter = 0;
 var jumpCounter = 0;
+// sparecounter gets plus one if a sparepart has been picked.
+// if that happens it gets the id of counter and adds the counternumber to it
+var spareCounter = 0;
+var countSparepart = document.getElementById("counter");
 var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
@@ -250,10 +254,14 @@ function animate(){
 	render();
 }
 
+countSparepart.innerHTML = spareCounter;
+
 function checkCollision(){
 	for (var i = 0; i < sparePartArray.length; i++){
 		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
 			if (sparePartArray[i].name == "one") sprite.speedBoost = true;
+			spareCounter++;
+			countSparepart.innerHTML = spareCounter;
 			pickUp.innerHTML = "You picked up the speed boost, hold down shift and run superduperfast!"
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);
