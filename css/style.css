@@ -1,12 +1,37 @@
 @import url(https://fonts.googleapis.com/css?family=Poiret+One);
 
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 body {
-	margin: 0;
+	margin: 0 auto;
 	overflow: hidden;
 }
 canvas {
 	width: 100%;
 	height: 100%;
+}
+
+#pickUp {
+	font-family: 'Poiret One', helvetica, sans-serif;
+	font-size: 15px;
+	padding:10px;
+	margin: 0 auto;
+	margin-right:100px;
+	margin-top:10px;
+	width:500px;
+	height:40px;
+	color:white;
+	bottom:10px;
+	text-align:center;
+	background: rgba(35, 128, 78, 0.7);
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+
 }
 
 
@@ -24,7 +49,7 @@ h3 {
 	color: white;
 	letter-spacing: 1.5px;
 	font-family: 'Poiret One', helvetica, sans-serif;
-	margin-left: 50px;
+	margin-left: 100px;
 	float:left;
 }
 
@@ -91,9 +116,3 @@ h3 {
 	-moz-border-radius:50%;
 	border-radius:50%;
 
-#pickUp {
-	font-family: arial;
-	font-size: 25px;
-	position: fixed;
-
-}
