@@ -8,10 +8,35 @@
 </head>
 
 <body>
+		<footer>
+		<h3>Robotopia</h3>
+		<div id="icon" class="icon">
+				<div id="counter" class="counter">
+				<p>3</p>
+				</div>
+		</div>
+			<div id="parts" class="hidden">
+				<img src="images/speartpart_1.png" class="hidden_1">
+				<img src="images/sparepart_2.png" class="hidden_2">
+				<img src="images/sparepart_3.png" class="hidden_3">
+				<img src="images/sparepart_4.png" class="hidden_4">
+			</div>
+		</footer>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/createobject.js"></script>
 		<script src="js/light.js"></script>
 		<script src="js/rain.js"></script>
+		<script type="text/javascript">
+			var spareIcon = document.getElementById("icon");
+			var hiddenparts = document.getElementById("parts");
+			spareIcon.addEventListener("click", function(){
+				hiddenparts.classList.toggle("show");
+				console.log("show");
+			});
+			// spareIcon.addEventListener("mouseleave", function(){
+			// 	hiddenparts.classList.remove = "show";
+			// });
+		</script>
 </body>
 </html>
