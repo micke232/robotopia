@@ -20,6 +20,11 @@ var jumpCounter = 0;
 // if that happens it gets the id of counter and adds the counternumber to it
 var spareCounter = 0;
 var countSparepart = document.getElementById("counter");
+var part1 = document.getElementById("part1");
+var part2 = document.getElementById("part2");
+var part3 = document.getElementById("part3");
+var part4 = document.getElementById("part4");
+
 var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
@@ -33,7 +38,7 @@ var sprite = {
 
 var gravity = {
 	posY: 0,
-	velocity: 30, //hastighet
+	velocity: 30, //Velocity
 	mass: 25,
 	accel: -80,
 	jumping: inAir,
@@ -49,14 +54,14 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z = 600;
+camera.position.z = 400;
 
 //the robot and User
 
-var Robot = "normal.png";
+var RobotFront = "normal.png";
 var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
 var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
-var robotMaterial = THREE.ImageUtils.loadTexture("images/" + Robot);
+var robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
 robotMaterial.minFilter = THREE.LinearFilter;
 
 // user created
@@ -81,8 +86,6 @@ function jump(){
 		gravity.posY = user.position.y;
 		sprite.jumping = true;
 	}
-
-
 }
 
 
@@ -93,7 +96,7 @@ function keyDown(e){
 
 	switch(e.keyCode){//space
 		case KEYCODE_SPACE:
-			if (spaceButton == false) jump(); //Kollar så space inte redan är tryckt
+			if (spaceButton == false) jump(); //Check if spacebutton is pushed or not
 			spaceButton = true;
 			//			jumpCounter += 1;
 			//			console.log(jumpCounter);
@@ -237,6 +240,11 @@ function animate(){
 
 		RobotRight.push(RobotRight.shift());
 	}
+	if (!holdRight && !holdLeft) {
+		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
+		user.material.map = robotMaterial;
+		user.material.needsUpdate = true;
+	}
 	// check if hit object
 
 
@@ -259,13 +267,34 @@ countSparepart.innerHTML = spareCounter;
 function checkCollision(){
 	for (var i = 0; i < sparePartArray.length; i++){
 		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
-			if (sparePartArray[i].name == "one") sprite.speedBoost = true;
-			spareCounter++;
-			countSparepart.innerHTML = spareCounter;
-			pickUp.innerHTML = "You picked up the speed boost, hold down shift and run superduperfast!"
-			var deletObject = sparePartArray[i];
-			inventory.push(sparePartArray[i]);
-			sparePartArray.splice(i,1);
+			if (sparePartArray[i].name == "one") {
+				sprite.speedBoost = true;
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part1.classList.add("showPart");
+				pickUp.innerHTML = "You got some wheels, hold down shift and run superduperfast!";
+			}
+			if (sparePartArray[i].name == "two") {
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part2.classList.add("showPart");
+				pickUp.innerHTML = "Those arms looks strong, Now dubbeljump!";
+			}
+			if (sparePartArray[i].name == "three") {
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part3.classList.add("showPart");
+				pickUp.innerHTML = "You're smart as a lightbulb!";
+			}
+			if (sparePartArray[i].name == "four") {
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part4.classList.add("showPart");
+				pickUp.innerHTML = "You picked up a new friend, THE END!";
+			}
+				var deletObject = sparePartArray[i];
+				inventory.push(sparePartArray[i]);
+				sparePartArray.splice(i,1);
 			for (var j = 0; j < scene.children.length; j++){
 				if (deletObject.name == scene.children[j].name){ // fan ta scene.children!
 					scene.remove(scene.children[j]);

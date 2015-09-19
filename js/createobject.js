@@ -1,12 +1,6 @@
-var mPlatform;
-var fixMovingPlatform;
-var sparePartTextures = [
-	THREE.ImageUtils.loadTexture("images/sparepart_icon.png"),
-	THREE.ImageUtils.loadTexture("images/sparepart_2.png"),
-	THREE.ImageUtils.loadTexture("images/sparepart_3.png"),
-	THREE.ImageUtils.loadTexture("images/sparepart_4.png"),
+var mPlatform,fixMovingPlatform;
+var sparePartTextures = [THREE.ImageUtils.loadTexture("images/sparepart_1.png"),THREE.ImageUtils.loadTexture("images/sparepart_2.png"), THREE.ImageUtils.loadTexture("images/sparepart_3.png"), THREE.ImageUtils.loadTexture("images/sparepart_4.png")];
 
-												];
 var createObject = {
 	smallPlatform: { //g = geometry
 		gx: 200,
@@ -79,8 +73,8 @@ var createObject = {
 	},
 
 	sparePart: {
-		gx: 50,
-		gy: 50,
+		gx: 80,
+		gy: 80,
 		gz: 10,
 		create: function(posX,posY,spareName,texture){
 			var spareGeometry = new THREE.PlaneGeometry( this.gx, this.gy, this.gz);
@@ -133,7 +127,7 @@ function writeWorld(){
 	createObject.largePlatform.create(200,1200);
 	createObject.largePlatform.create(-200,1200);
 
-	//spare parts
+	//spareparts
 	createObject.sparePart.create(-1100,-450, "one", sparePartTextures[0]);
 	createObject.sparePart.create(-1200, 650, "two", sparePartTextures[1]);
 	createObject.sparePart.create(2400, 1450, "three", sparePartTextures[2]);
