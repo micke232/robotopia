@@ -54,7 +54,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-camera.position.z = 600;
+camera.position.z = 400;
 
 //the robot and User
 
@@ -86,8 +86,6 @@ function jump(){
 		gravity.posY = user.position.y;
 		sprite.jumping = true;
 	}
-
-
 }
 
 
@@ -242,7 +240,7 @@ function animate(){
 
 		RobotRight.push(RobotRight.shift());
 	}
-	else {
+	if (!holdRight && !holdLeft) {
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;

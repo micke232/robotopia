@@ -72,8 +72,8 @@ var createObject = {
 	},
 
 	sparePart: {
-		gx: 50,
-		gy: 50,
+		gx: 80,
+		gy: 80,
 		gz: 10,
 		create: function(posX,posY,spareName,texture){
 			var spareGeometry = new THREE.PlaneGeometry( this.gx, this.gy, this.gz);
