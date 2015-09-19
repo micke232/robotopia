@@ -90,6 +90,10 @@ h3 {
 	display: block;
 }
 
+.showPart {
+	display: inline;
+}
+
 
 
 .icon {

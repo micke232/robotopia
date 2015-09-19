@@ -264,14 +264,34 @@ countSparepart.innerHTML = spareCounter;
 function checkCollision(){
 	for (var i = 0; i < sparePartArray.length; i++){
 		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
-			if (sparePartArray[i].name == "one") sprite.speedBoost = true;
-			spareCounter++;
-			countSparepart.innerHTML = spareCounter;
-			part1.classList.add("show");
-			pickUp.innerHTML = "You picked up the speed boost, hold down shift and run superduperfast!"
-			var deletObject = sparePartArray[i];
-			inventory.push(sparePartArray[i]);
-			sparePartArray.splice(i,1);
+			if (sparePartArray[i].name == "one") {
+				sprite.speedBoost = true;
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part1.classList.add("showPart");
+				pickUp.innerHTML = "You got some wheels, hold down shift and run superduperfast!";	
+			}
+			if (sparePartArray[i].name == "two") {
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part2.classList.add("showPart");
+				pickUp.innerHTML = "Those arms looks strong, Now dubbeljump!";
+			}
+			if (sparePartArray[i].name == "three") {
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part3.classList.add("showPart");
+				pickUp.innerHTML = "You're smart as a lightbulb!";
+			}
+			if (sparePartArray[i].name == "four") {
+				spareCounter++;
+				countSparepart.innerHTML = spareCounter;
+				part4.classList.add("showPart");
+				pickUp.innerHTML = "You picked up a new friend, THE END!";
+			}
+				var deletObject = sparePartArray[i];
+				inventory.push(sparePartArray[i]);
+				sparePartArray.splice(i,1);
 			for (var j = 0; j < scene.children.length; j++){
 				if (deletObject.name == scene.children[j].name){ // fan ta scene.children!
 					scene.remove(scene.children[j]);
