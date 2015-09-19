@@ -8,6 +8,7 @@ var holdLeft = false;
 var holdRight = false;
 var holdShift = false;
 var spaceButton = false;
+var doubleJump = true;
 var jumpHight = 250;
 var inAir = true;
 var objectArray = [];
@@ -16,6 +17,7 @@ var inventory = [];
 var sparePartArray = [];
 var platformCounter = 0;
 var jumpCounter = 0;
+var spriteCounter = 0;
 // sparecounter gets plus one if a sparepart has been picked.
 // if that happens it gets the id of counter and adds the counternumber to it
 var spareCounter = 0;
@@ -26,14 +28,16 @@ var part3 = document.getElementById("part3");
 var part4 = document.getElementById("part4");
 
 var sprite = {
+	normalSpeed: 10,
+	boostSpeed: 5,
 	jumping: false,
 	jumpSpeed: 10,
-	height: 50,
+	height: 100,
 	doubleJump: false,
 	speedBoost: false,
 	airFloat: false,
 	x: NaN,
-	y: 80 //startposition
+	y: 150 //startposition
 };
 
 var gravity = {
@@ -65,8 +69,7 @@ var robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
 robotMaterial.minFilter = THREE.LinearFilter;
 
 // user created
-var userGeometry = new THREE.PlaneGeometry( 100, 100, 10);
-
+var userGeometry = new THREE.PlaneGeometry( sprite.height, 100, 10);
 var userMaterial = new THREE.MeshPhongMaterial({
 	transparent: true,
 	map: robotMaterial 
@@ -77,30 +80,28 @@ user.minFilter = THREE.LinearFilter;
 scene.add(user);
 
 
-
+document.addEventListener("keydown", keyDown);
+document.addEventListener("keyup", keyUp);
 
 function jump(){
-
-	if (sprite.jumping == false && inAir == false){
-		gravity.accel += 1;
+	if ((sprite.jumping == false && inAir == false ) || doubleJump){
+		gravity.accel = -80;
 		gravity.posY = user.position.y;
 		sprite.jumping = true;
+		if (inAir) doubleJump = false;
 	}
 }
 
 
-document.addEventListener("keydown", keyDown);
-document.addEventListener("keyup", keyUp);
-var spriteCounter = 0;
-function keyDown(e){
 
+function keyDown(e){
 	switch(e.keyCode){//space
 		case KEYCODE_SPACE:
-			if (spaceButton == false) jump(); //Check if spacebutton is pushed or not
-			spaceButton = true;
-			//			jumpCounter += 1;
-			//			console.log(jumpCounter);
-			//			console.log(sprite.jumping);
+			if (!spaceButton || sprite.doubleJump){ //Check if spacebutton is pushed or not
+				spaceButton = true;
+				jump();
+			}
+
 			break;
 		case KEYCODE_LEFT:
 			holdLeft = true;
@@ -143,15 +144,18 @@ function render() {
 };
 
 
-
+var frameCounter = 0;
+setInterval(function(){frameCounter = 0;}, 1000)
 function animate(){
+	frameCounter++;
 	requestAnimationFrame( animate );
+	//	setTimeout(function(){requestAnimationFrame( animate );}, 500);
 	camera.position.x = user.position.x;
 	camera.position.y = user.position.y;
 	background.position.y = camera.position.y + 200;
 	background.position.x = camera.position.x;
 	//colluision detection
-  if (user.position.y < -1000){ //when you die, reload page
+	if (user.position.y < -1000){ //when you die, reload page
 		location.reload();
 	}
 	var originPoint = user.position.clone();
@@ -162,11 +166,16 @@ function animate(){
 		var directionVector = globalVertex.sub(user.position);
 		var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
 		var collisionResult = ray.intersectObjects(objectArray);
-
 		if (collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){ //Det som ska hända när man träffar ett objekt !!! bug löst med fulhack, letar fortfarande efter en bättre lösning !!!
+
 			inAir = false;
-			spaceButton = false;
+			var platformPosY = parseInt(collisionResult[0].point.y, 10);
+			var userPosY = (parseInt(user.position.y - (sprite.height / 2), 10));
+			if (!sprite.jumping && collisionResult[0] && (platformPosY >= (userPosY - 10) || platformPosY <= (userPosY + 10))) spaceButton = false;
+
 			gravity.accel = -80;
+			doubleJump = true;
+
 			//moving platform
 			if (collisionResult[0].object.name == "moving" && collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){
 				if (!mPlatform.up){ // upp
@@ -194,11 +203,14 @@ function animate(){
 				}
 			}
 
-
 		}
+
 		else inAir = true;
 	};
 	//	if (jumpCounter < 2){
+
+
+
 
 	//	}
 	if (sprite.jumping == true && gravity.posY + jumpHight > user.position.y){
@@ -209,7 +221,7 @@ function animate(){
 			sprite.jumping = false;
 		}
 	}
-	if (sprite.jumping == false){ //faller
+	if (sprite.jumping == false){ //Falls
 		if (inAir){
 			user.position.y += (gravity.velocity * gravity.mass) / gravity.accel;
 			if (gravity.max == false){
@@ -221,25 +233,38 @@ function animate(){
 		}
 	}
 
+
+
+
 	if (holdLeft){
-		if (holdShift && sprite.speedBoost) user.position.x -= 14;
+		var moveSpeedLeft = sprite.normalSpeed;
+		if (holdShift && sprite.speedBoost){
+			moveSpeedLeft = sprite.boostSpeed;
+			user.position.x -= 14;
+		}
 		else user.position.x -= 7;
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotLeft[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
 
 
-		RobotLeft.push(RobotLeft.shift());
+		if (frameCounter % moveSpeedLeft == 0) RobotLeft.push(RobotLeft.shift());
 	}
+
 	if (holdRight){
-		if (holdShift && sprite.speedBoost) user.position.x += 14;
+		var moveSpeedRight = sprite.normalSpeed;
+		if (holdShift && sprite.speedBoost){
+			moveSpeedRight = sprite.boostSpeed;
+			user.position.x += 14;
+		}
 		else user.position.x += 7;
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotRight[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
 
-		RobotRight.push(RobotRight.shift());
+		if (frameCounter % moveSpeedRight == 0) RobotRight.push(RobotRight.shift());
 	}
+
 	if (!holdRight && !holdLeft) {
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
 		user.material.map = robotMaterial;
@@ -266,7 +291,7 @@ countSparepart.innerHTML = spareCounter;
 
 function checkCollision(){
 	for (var i = 0; i < sparePartArray.length; i++){
-		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // lång if ZZzzz
+		if (user.position.x >= sparePartArray[i].position.x - 50 && user.position.x <= sparePartArray[i].position.x + 50 && user.position.y >= sparePartArray[i].position.y - 50 && user.position.y <= sparePartArray[i].position.y + 50){ // Long if ZZzzz
 			if (sparePartArray[i].name == "one") {
 				sprite.speedBoost = true;
 				spareCounter++;
@@ -275,6 +300,7 @@ function checkCollision(){
 				pickUp.innerHTML = "You got some wheels, hold down shift and run superduperfast!";
 			}
 			if (sparePartArray[i].name == "two") {
+				sprite.doubleJump = true;
 				spareCounter++;
 				countSparepart.innerHTML = spareCounter;
 				part2.classList.add("showPart");
@@ -292,11 +318,11 @@ function checkCollision(){
 				part4.classList.add("showPart");
 				pickUp.innerHTML = "You picked up a new friend, THE END!";
 			}
-				var deletObject = sparePartArray[i];
-				inventory.push(sparePartArray[i]);
-				sparePartArray.splice(i,1);
+			var deletObject = sparePartArray[i];
+			inventory.push(sparePartArray[i]);
+			sparePartArray.splice(i,1);
 			for (var j = 0; j < scene.children.length; j++){
-				if (deletObject.name == scene.children[j].name){ // fan ta scene.children!
+				if (deletObject.name == scene.children[j].name){ // Fuck this scene.children!
 					scene.remove(scene.children[j]);
 				}
 			};

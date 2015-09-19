@@ -23,6 +23,3 @@ for (var i = 0; i < particleCount; i++){
 function randomGenerator(){
 	return Math.floor((Math.random() * 4000) - 2000);
 };
-
-
-

@@ -160,13 +160,7 @@ background.position.z = -350;
 scene.add(background);
 
 
-function jump(){
-	if (sprite.jumping == false && inAir == false){
-		gravity.accel = 1;
-		gravity.posY = user.position.y;
-		sprite.jumping = true;
-	}
-}
+
 
 
 function fulHack(posX,posY,fx,fy,fz){
