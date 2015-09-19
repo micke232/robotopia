@@ -58,10 +58,10 @@ camera.position.z = 600;
 
 //the robot and User
 
-var Robot = "normal.png";
+var RobotFront = "normal.png";
 var RobotLeft = ["left_1.png", "left_2.png", "left_3.png", "left_4.png"];
 var RobotRight = ["right_1.png", "right_2.png", "right_3.png", "right_4.png"];
-var robotMaterial = THREE.ImageUtils.loadTexture("images/" + Robot);
+var robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
 robotMaterial.minFilter = THREE.LinearFilter;
 
 // user created
@@ -241,6 +241,11 @@ function animate(){
 		user.material.needsUpdate = true;
 
 		RobotRight.push(RobotRight.shift());
+	}
+	else {
+		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
+		user.material.map = robotMaterial;
+		user.material.needsUpdate = true;
 	}
 	// check if hit object
 

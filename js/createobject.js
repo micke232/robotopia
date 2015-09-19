@@ -1,5 +1,4 @@
-var mPlatform;
-var fixMovingPlatform;
+var mPlatform,fixMovingPlatform;
 var sparePartTextures = [THREE.ImageUtils.loadTexture("images/sparepart_1.png"),THREE.ImageUtils.loadTexture("images/sparepart_2.png"), THREE.ImageUtils.loadTexture("images/sparepart_3.png"), THREE.ImageUtils.loadTexture("images/sparepart_4.png")];
 var createObject = {
 	smallPlatform: { //g = geometry
