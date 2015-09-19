@@ -12,7 +12,7 @@ var createObject = {
 		create: function(posX,posY){
 			var smallGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz );
 			var smallMaterial = new THREE.MeshPhongMaterial( {
-				map: THREE.ImageUtils.loadTexture("images/platform.jpg"),
+				map: THREE.ImageUtils.loadTexture("images/platform_3.png"),
 			});
 			var smallPlatform = new THREE.Mesh(smallGeometry, smallMaterial);
 			smallPlatform.position.x = posX;
@@ -33,7 +33,7 @@ var createObject = {
 		create: function(posX,posY){
 			var largeGeometry = new THREE.BoxGeometry( this.gx, this.gy, this.gz );
 			var largeMaterial = new THREE.MeshPhongMaterial( {
-				map: THREE.ImageUtils.loadTexture("images/platform.jpg"),
+				map: THREE.ImageUtils.loadTexture("images/platform_3.png"),
 			});
 			var largePlatform = new THREE.Mesh( largeGeometry, largeMaterial );
 			largePlatform.position.x = posX;
