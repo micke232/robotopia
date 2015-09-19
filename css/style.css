@@ -61,6 +61,7 @@ h3 {
 	margin-left: 20px;
 	margin-top:10px;
 	opacity: .7;
+	display: none;
 	-webkit-transition: all .5s ease-out;
 	-moz-transition: all .5s ease-out;
 	-o-transition: all .5s ease-out;

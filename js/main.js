@@ -20,6 +20,11 @@ var jumpCounter = 0;
 // if that happens it gets the id of counter and adds the counternumber to it
 var spareCounter = 0;
 var countSparepart = document.getElementById("counter");
+var part1 = document.getElementById("part1");
+var part2 = document.getElementById("part2");
+var part3 = document.getElementById("part3");
+var part4 = document.getElementById("part4");
+
 var sprite = {
 	jumping: false,
 	jumpSpeed: 10,
@@ -262,6 +267,7 @@ function checkCollision(){
 			if (sparePartArray[i].name == "one") sprite.speedBoost = true;
 			spareCounter++;
 			countSparepart.innerHTML = spareCounter;
+			part1.classList.add("show");
 			pickUp.innerHTML = "You picked up the speed boost, hold down shift and run superduperfast!"
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);
