@@ -147,11 +147,10 @@ function render() {
 
 
 var frameCounter = 0;
-setInterval(function(){frameCounter = 0;}, 1000)
+setInterval(function(){frameCounter = 0;}, 1000) // function thats used by spriteanimation
 function animate(){
 
 	frameCounter++;
-
 	requestAnimationFrame( animate );
 	//	setTimeout(function(){requestAnimationFrame( animate );}, 500);
 	camera.position.x = user.position.x;
@@ -327,7 +326,7 @@ function checkCollision(){
 			}
 			if (sparePartArray[i].name == "five") {
 				countSparepart.innerHTML = spareCounter;
-				pickUp.innerHTML = "You found him! You both lived happily ever after";
+				pickUp.innerHTML = "You found you'r friend! You both lived happily ever after";
 				camera.position.z = 200; //zoom in when you win!
 			}
 			var deletObject = sparePartArray[i];
