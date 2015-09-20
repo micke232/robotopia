@@ -29,8 +29,8 @@ var part3 = document.getElementById("part3");
 var part4 = document.getElementById("part4");
 
 var sprite = {
-	normalSpeed: 10,
-	boostSpeed: 5,
+	normalSpeed: 10, //movespeed on sprite
+	boostSpeed: 5, //movespeed on sprite when boosted
 	jumping: false,
 	jumpSpeed: 10,
 	height: 100,
@@ -149,7 +149,9 @@ function render() {
 var frameCounter = 0;
 setInterval(function(){frameCounter = 0;}, 1000)
 function animate(){
+
 	frameCounter++;
+
 	requestAnimationFrame( animate );
 	//	setTimeout(function(){requestAnimationFrame( animate );}, 500);
 	camera.position.x = user.position.x;
@@ -158,7 +160,7 @@ function animate(){
 	background.position.x = camera.position.x;
 	sun.rotation.z += 0.01;
 	//colluision detection
-	if (user.position.y < -1000){ //when you die, reload page
+	if (user.position.y < -600){ //when you die, reload page
 		location.reload();
 	}
 	var originPoint = user.position.clone();
@@ -326,7 +328,7 @@ function checkCollision(){
 			if (sparePartArray[i].name == "five") {
 				countSparepart.innerHTML = spareCounter;
 				pickUp.innerHTML = "You found him! You both lived happily ever after";
-				camera.position.z = 200;
+				camera.position.z = 200; //zoom in when you win!
 			}
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);

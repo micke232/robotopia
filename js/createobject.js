@@ -57,7 +57,7 @@ var createObject = {
 		create: function(posX,posY){
 			var movingGeometry = new THREE.BoxGeometry(this.gx, this.gy, this.gz);
 			var movingMaterial = new THREE.MeshPhongMaterial( {
-				color: "yellow",
+				color: "#f5f586",
 				map: THREE.ImageUtils.loadTexture("images/smallplatform.png"),
 			});
 			mPlatform = new THREE.Mesh(movingGeometry, movingMaterial);
@@ -175,7 +175,7 @@ var pipesMaterial = new THREE.MeshPhongMaterial( {
 var pipesBackground = new THREE.Mesh( Pipes, pipesMaterial );
 pipesBackground.position.z = 50;
 pipesBackground.position.x = 200;
-pipesBackground.position.y = -450;
+pipesBackground.position.y = -500;
 scene.add(pipesBackground);
 
 //background created
