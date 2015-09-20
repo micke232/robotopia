@@ -14,6 +14,7 @@ var createObject = {
 			var smallMaterial = new THREE.MeshPhongMaterial( {
 				map: THREE.ImageUtils.loadTexture("images/smallplatform.png"),
 			});
+			smallMaterial.map.minFilter = THREE.LinearFilter;
 			var smallPlatform = new THREE.Mesh(smallGeometry, smallMaterial);
 			smallPlatform.position.x = posX;
 			smallPlatform.position.y = posY;
@@ -35,6 +36,7 @@ var createObject = {
 			var largeMaterial = new THREE.MeshPhongMaterial( {
 				map: THREE.ImageUtils.loadTexture("images/largeplatform.png"),
 			});
+			largeMaterial.map.minFilter = THREE.LinearFilter;
 			var largePlatform = new THREE.Mesh( largeGeometry, largeMaterial );
 			largePlatform.position.x = posX;
 			largePlatform.position.y = posY;
@@ -60,6 +62,7 @@ var createObject = {
 				color: "#f5f586",
 				map: THREE.ImageUtils.loadTexture("images/smallplatform.png"),
 			});
+			movingMaterial.map.minFilter = THREE.LinearFilter;
 			mPlatform = new THREE.Mesh(movingGeometry, movingMaterial);
 			mPlatform.position.x = posX;
 			mPlatform.position.y = posY;
@@ -82,6 +85,7 @@ var createObject = {
 				transparent: true,
 				map: THREE.ImageUtils.loadTexture("images/cloud.png"),
 			});
+			cloudMaterial.map.minFilter = THREE.LinearFilter;
 			cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
 			cloud.position.x = posX;
 			cloud.position.y = posY;
@@ -102,6 +106,7 @@ var createObject = {
 				transparent: true,
 				map: texture,
 			});
+			spareMaterial.map.minFilter = THREE.LinearFilter;
 			var sparePart = new THREE.Mesh( spareGeometry, spareMaterial);
 			sparePart.position.x = posX;
 			sparePart.position.y = posY;
@@ -172,6 +177,7 @@ var pipesMaterial = new THREE.MeshPhongMaterial( {
 	map: THREE.ImageUtils.loadTexture("images/pipes.png"),
 	transparent: true
 });
+pipesMaterial.map.minFilter = THREE.LinearFilter;
 var pipesBackground = new THREE.Mesh( Pipes, pipesMaterial );
 pipesBackground.position.z = 50;
 pipesBackground.position.x = 200;
@@ -184,6 +190,7 @@ var backgroundGeometry = new THREE.PlaneGeometry( 3000, 2000 , 1 );
 var backgroundMaterial = new THREE.MeshPhongMaterial( {
 	map: THREE.ImageUtils.loadTexture("images/background.jpg"),
 });
+backgroundMaterial.map.minFilter = THREE.LinearFilter;
 var background = new THREE.Mesh( backgroundGeometry, backgroundMaterial );
 background.position.z = -350;
 scene.add(background);
@@ -194,6 +201,7 @@ var sunMaterial = new THREE.MeshPhongMaterial( {
 	transparent: true,
 	map: THREE.ImageUtils.loadTexture("images/sun.png"),
 });
+sunMaterial.map.minFilter = THREE.LinearFilter;
 var sun = new THREE.Mesh( sunGeometry, sunMaterial);
 sun.position.y = 2200;
 sun.position.x = 3200;
@@ -206,6 +214,7 @@ function theEnd(){
 		transparent: true,
 		map: THREE.ImageUtils.loadTexture("images/robotfriend.png"),
 	});
+	friendMaterial.map.minFilter = THREE.LinearFilter;
 	var friend = new THREE.Mesh( friendGeometry, friendMaterial);
 	friend.position.x = -150;
 	friend.position.y = 1250;

@@ -3,6 +3,7 @@ var particleMaterial = new THREE.MeshLambertMaterial({
 	transparent: true,
 	map: THREE.ImageUtils.loadTexture("images/raindrop.png")
 });
+particleMaterial.map.minFilter = THREE.LinearFilter;
 var posX,
 		posY,
 		posZ,

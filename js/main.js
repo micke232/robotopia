@@ -243,6 +243,7 @@ function animate(){
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotLeft[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
+		robotMaterial.minFilter = THREE.LinearFilter;
 
 
 		if (frameCounter % moveSpeedLeft == 0) RobotLeft.push(RobotLeft.shift());
@@ -258,6 +259,7 @@ function animate(){
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotRight[0]);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
+		robotMaterial.minFilter = THREE.LinearFilter;
 
 		if (frameCounter % moveSpeedRight == 0) RobotRight.push(RobotRight.shift());
 	}
@@ -266,6 +268,7 @@ function animate(){
 		robotMaterial = THREE.ImageUtils.loadTexture("images/" + RobotFront);
 		user.material.map = robotMaterial;
 		user.material.needsUpdate = true;
+		robotMaterial.minFilter = THREE.LinearFilter;
 	}
 	// check if hit object
 
@@ -326,9 +329,14 @@ function checkCollision(){
 				pickUp.innerHTML = "You got all the parts, go find you´r friend!";
 			}
 			if (sparePartArray[i].name == "five") {
+				part1.classList.remove("showPart");
+				part2.classList.remove("showPart");
+				part3.classList.remove("showPart");
+				part4.classList.remove("showPart");
+				spareCounter = 0;
 				countSparepart.innerHTML = spareCounter;
 				pickUp.innerHTML = "You found him! You both lived happily ever after";
-				camera.position.z = 200; //zoom in when you win!
+				camera.position.z = 300; //zoom in when you win!
 			}
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);
