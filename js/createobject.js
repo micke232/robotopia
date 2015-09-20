@@ -72,6 +72,26 @@ var createObject = {
 		}
 	},
 
+	clouds: {
+		gx: 240,
+		gy: 120,
+		gz: 1,
+		create: function(posX,posY,posZ){
+			var cloudGeometry = new THREE.PlaneGeometry(this.gx, this.gy, this.gz);
+			var cloudMaterial = new THREE.MeshPhongMaterial( {
+				transparent: true,
+				map: THREE.ImageUtils.loadTexture("images/cloud.png"),
+			});
+			cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+			cloud.position.x = posX;
+			cloud.position.y = posY;
+			cloud.position.z = posZ;
+			cloud.up = true;
+			cloudArray.push(cloud);
+			scene.add(cloud);
+		}
+	},
+
 	sparePart: {
 		gx: 80,
 		gy: 80,
@@ -134,6 +154,15 @@ function writeWorld(){
 	createObject.sparePart.create(400, 2050, "four", sparePartTextures[3]);
 	//moving platforms
 	createObject.movingPlatform.create(-400,0);
+	// cloud
+	createObject.clouds.create(3800,1000, 100);
+	createObject.clouds.create(3000,1200, 250);
+	createObject.clouds.create(2600,1100, 50);
+	createObject.clouds.create(2000,1200, 200);
+	createObject.clouds.create(1600,1400, 100);
+	createObject.clouds.create(1200,1200, 150);
+	createObject.clouds.create(800,1500, 50);
+	createObject.clouds.create(400,1300, 200);
 }
 
 //background with pipes created
@@ -158,6 +187,17 @@ var backgroundMaterial = new THREE.MeshPhongMaterial( {
 var background = new THREE.Mesh( backgroundGeometry, backgroundMaterial );
 background.position.z = -350;
 scene.add(background);
+
+
+var sunGeometry = new THREE.PlaneGeometry( 256, 256 , 1 );
+var sunMaterial = new THREE.MeshPhongMaterial( {
+	transparent: true,
+	map: THREE.ImageUtils.loadTexture("images/sun.png"),
+});
+var sun = new THREE.Mesh( sunGeometry, sunMaterial);
+sun.position.y = 2200;
+sun.position.x = 3200;
+scene.add(sun);
 
 
 

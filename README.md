@@ -12,27 +12,27 @@ To do list:
  - [x] Platforms
  - [x] Objects
  
-- [ ] Sprites
+- [x] Sprites
  - [x] Movement
  - [x] Start Animation
- - [ ] Fix speed
+ - [x] Fix speed
  
 - [x] World
  - [x] Rain
+ - [x] Sun
+ - [x] Clouds
  - [x] Foreground image
- - [ ] Create textures
-  - [ ] Platforms
-  - [ ] Spareparts
+ - [x] Create textures
+  - [x] Platforms
+  - [x] Spareparts
 	
-- [ ] Power Ups
- - [ ] Double jump
+- [x] Power Ups
+ - [x] Double jump
  - [x] Speed Boost
- - [ ] Floating
- 
- 
- More to come
- 
 
+ 
+------------------
+Debuging time!
 
 
 

@@ -13,6 +13,7 @@ var jumpHight = 250;
 var inAir = true;
 var objectArray = [];
 var rain = [];
+var cloudArray = [];
 var inventory = [];
 var sparePartArray = [];
 var platformCounter = 0;
@@ -154,6 +155,7 @@ function animate(){
 	camera.position.y = user.position.y;
 	background.position.y = camera.position.y + 200;
 	background.position.x = camera.position.x;
+	sun.rotation.z += 0.01;
 	//colluision detection
 	if (user.position.y < -1000){ //when you die, reload page
 		location.reload();
@@ -281,6 +283,16 @@ function animate(){
 		if (rain[i].position.y < -500){
 			rain[i].position.y = 1000;
 			rain[i].position.x = randomGenerator();
+		}
+	}
+
+	for (var i = 0; i < cloudArray.length; i++){
+
+		cloudArray[i].position.x -= 1;
+
+		if (cloudArray[i].position.x < -800){
+
+			cloudArray[i].position.x = 3800;
 		}
 	}
 
