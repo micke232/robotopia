@@ -128,3 +128,7 @@ h3 {
 #counter{
 	padding-top:2px;
 }
+
+#fps {
+	color: red;
+}

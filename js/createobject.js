@@ -200,6 +200,21 @@ sun.position.x = 3200;
 scene.add(sun);
 
 
+function theEnd(){
+	var friendGeometry = new THREE.PlaneGeometry( 80, 80 , 1 );
+	var friendMaterial = new THREE.MeshPhongMaterial( {
+		transparent: true,
+		map: THREE.ImageUtils.loadTexture("images/robotfriend.png"),
+	});
+	var friend = new THREE.Mesh( friendGeometry, friendMaterial);
+	friend.position.x = -150;
+	friend.position.y = 1250;
+	friend.name = "five";
+	sparePartArray.push(friend);
+	scene.add(friend);
+}
+
+
 
 
 

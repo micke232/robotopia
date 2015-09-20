@@ -114,6 +114,7 @@ function keyDown(e){
 			break;
 		case KEYCODE_ENTER:
 			checkCollision();
+			if (inventory.length > 3) theEnd();
 			break;
 
 		case KEYCODE_SHIFT:
@@ -180,7 +181,7 @@ function animate(){
 
 			//moving platform
 			if (collisionResult[0].object.name == "moving" && collisionResult.length > 0 && collisionResult[0].distance < directionVector.length()){
-				if (!mPlatform.up){ // upp
+				if (!mPlatform.up){ // Down
 					platformCounter += 0.01;
 					mPlatform.position.y += 0.1;
 					mPlatform.position.x += 0.1;
@@ -192,7 +193,7 @@ function animate(){
 
 				}
 
-				if (mPlatform.up){ // ner
+				if (mPlatform.up){ // Up
 					platformCounter -= 0.01;
 					mPlatform.position.y -= 0.1;
 					mPlatform.position.x -= 0.1;
@@ -209,12 +210,7 @@ function animate(){
 
 		else inAir = true;
 	};
-	//	if (jumpCounter < 2){
 
-
-
-
-	//	}
 	if (sprite.jumping == true && gravity.posY + jumpHight > user.position.y){
 		user.position.y -= (gravity.velocity * gravity.mass) / gravity.accel;
 		gravity.accel += 1;
@@ -234,9 +230,6 @@ function animate(){
 			}
 		}
 	}
-
-
-
 
 	if (holdLeft){
 		var moveSpeedLeft = sprite.normalSpeed;
@@ -328,7 +321,12 @@ function checkCollision(){
 				spareCounter++;
 				countSparepart.innerHTML = spareCounter;
 				part4.classList.add("showPart");
-				pickUp.innerHTML = "You picked up a new friend, THE END!";
+				pickUp.innerHTML = "You got all the parts, go find you´r friend!";
+			}
+			if (sparePartArray[i].name == "five") {
+				countSparepart.innerHTML = spareCounter;
+				pickUp.innerHTML = "You found him! You both lived happily ever after";
+				camera.position.z = 200;
 			}
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);

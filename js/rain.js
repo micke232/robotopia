@@ -7,7 +7,7 @@ var posX,
 		posY,
 		posZ,
 		cloneParticle;
-var particleGeometry = new THREE.CircleGeometry(5,20);
+var particleGeometry = new THREE.CircleGeometry(6,14);
 var particleMesh = new THREE.Mesh(particleGeometry, particleMaterial);
 var particleCount = 500;
 for (var i = 0; i < particleCount; i++){
