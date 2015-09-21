@@ -8,6 +8,21 @@
 </head>
 
 <body>
+	<script>
+	//MEN USCH!!! FUL!!
+			(function(){
+				var script=document.createElement('script');
+				script.onload=function(){
+					var stats=new Stats();
+					stats.domElement.style.cssText='position:fixed;left:0;top:0;z-index:10000';
+					document.body.appendChild(stats.domElement);
+					requestAnimationFrame(function loop(){
+						stats.update();requestAnimationFrame(loop)
+					});
+				};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+				document.head.appendChild(script);
+			})()
+	</script>
 	<div id="fps"></div>
 		<footer>
 			<h3>Robotopia</h3>
@@ -24,7 +39,7 @@
 			</div>
 			<div id="pickUp"></div>
 		</footer>
-<div id"prload"></div>
+<div id="preload"></div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
 		<script src="js/main.js"></script>

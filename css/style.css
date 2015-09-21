@@ -230,3 +230,9 @@ h3 {
 #fps {
 	color: red;
 }
+
+#preload {
+	position: fixed;
+	margin-top: 9999px;
+	margin-left: 9999px;
+}

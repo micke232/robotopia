@@ -147,11 +147,10 @@ function render() {
 
 
 var frameCounter = 0;
-setInterval(function(){frameCounter = 0;}, 1000)
+setInterval(function(){frameCounter = 0;}, 1000) // function thats used by spriteanimation
 function animate(){
 
 	frameCounter++;
-
 	requestAnimationFrame( animate );
 	//	setTimeout(function(){requestAnimationFrame( animate );}, 500);
 	camera.position.x = user.position.x;
@@ -337,6 +336,7 @@ function checkCollision(){
 				countSparepart.innerHTML = spareCounter;
 				pickUp.innerHTML = "You found him! You both lived happily ever after";
 				camera.position.z = 300; //zoom in when you win!
+
 			}
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);
