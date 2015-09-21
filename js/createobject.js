@@ -205,15 +205,26 @@ sunMaterial.map.minFilter = THREE.LinearFilter;
 var sun = new THREE.Mesh( sunGeometry, sunMaterial);
 sun.position.y = 2200;
 sun.position.x = 3200;
+sun.name = "six";
+sparePartArray.push(sun);
 scene.add(sun);
 
 
 function theEnd(){
+	if (cheatBool == false){
 	var friendGeometry = new THREE.PlaneGeometry( 80, 80 , 1 );
 	var friendMaterial = new THREE.MeshPhongMaterial( {
 		transparent: true,
 		map: THREE.ImageUtils.loadTexture("images/robotfriend.png"),
 	});
+	}
+	if (cheatBool == true){
+		var friendGeometry = new THREE.PlaneGeometry( 80, 80 , 1 );
+		var friendMaterial = new THREE.MeshPhongMaterial( {
+			transparent: true,
+			map: THREE.ImageUtils.loadTexture("images/dopefish.jpg"),
+		});
+	}
 	friendMaterial.map.minFilter = THREE.LinearFilter;
 	var friend = new THREE.Mesh( friendGeometry, friendMaterial);
 	friend.position.x = -150;

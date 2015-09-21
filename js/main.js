@@ -11,6 +11,7 @@ var spaceButton = false;
 var doubleJump = true;
 var jumpHight = 250;
 var inAir = true;
+var cheatBool = false;
 var objectArray = [];
 var rain = [];
 var cloudArray = [];
@@ -337,6 +338,14 @@ function checkCollision(){
 				pickUp.innerHTML = "You found him! You both lived happily ever after";
 				camera.position.z = 300; //zoom in when you win!
 
+			}
+			if (sparePartArray[i].name == "six") {
+				var cheat = THREE.ImageUtils.loadTexture("images/gamecordinates.jpeg");
+				background.material.map = cheat;
+				background.material.needsUpdate = true;
+				cheat.minFilter = THREE.LinearFilter;
+				pickUp.innerHTML = "You found the source code, be careful! Remember what happend to Commander Keen!"
+				cheatBool = true;
 			}
 			var deletObject = sparePartArray[i];
 			inventory.push(sparePartArray[i]);
